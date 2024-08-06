@@ -1,4 +1,5 @@
-<script src="/assets/scripts/copy-to-clipboard.js"></script>
+<script src="../assets/scripts/copy-to-clipboard.js"></script>
+<link rel="stylesheet" href="../assets/css/copy-to-clipboard.css">
 
 # Lab 1: Blinking an LED
 
