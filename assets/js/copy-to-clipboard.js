@@ -1,12 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
-  document.querySelectorAll('pre').forEach((pre) => {
+  document.querySelectorAll('pre > code').forEach((codeBlock) => {
     const button = document.createElement('button');
     button.className = 'copy-btn';
     button.type = 'button';
     button.innerText = 'Copy';
 
     button.addEventListener('click', () => {
-      const code = pre.querySelector('code').innerText.trim();
+      const code = codeBlock.innerText.trim();
       navigator.clipboard.writeText(code).then(() => {
         button.innerText = 'Copied!';
         setTimeout(() => {
@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
 
+    const pre = codeBlock.parentNode;
     pre.style.position = 'relative';
     pre.appendChild(button);
   });
