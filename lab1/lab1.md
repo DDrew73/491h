@@ -1,3 +1,10 @@
+---
+layout: default
+---
+
+{% include codeHeader.html %}
+
+
 # Lab 1: Blinking an LED
 
 ## Objective
@@ -14,7 +21,6 @@ Learn how to blink an onboard LED on the Arduino Nano ESP32 using CircuitPython.
 2. Open your preferred code editor.
 
 ### Step 2: Code
-{% include codeHeader.html %}
 ```python
 import time
 import board
