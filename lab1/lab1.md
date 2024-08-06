@@ -1,9 +1,4 @@
----
-layout: default
----
-
-{% include codeHeader.html %}
-
+<script src="/assets/scripts/copy-to-clipboard.js"></script>
 
 # Lab 1: Blinking an LED
 
@@ -36,5 +31,3 @@ while True:
     led.value = False # Turn off the LED
     time.sleep(0.5)   # Wait for 500ms
 ```
-
-<script src="/assets/scripts/copyCode.js"></script>
