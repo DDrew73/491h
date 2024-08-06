@@ -18,7 +18,7 @@ Learn how to blink an onboard LED on the Arduino Nano ESP32 using CircuitPython.
 
 ### Step 2: Code
 {% include codeHeader.html %}
-```python
+```ruby
 import time
 import board
 import digitalio
