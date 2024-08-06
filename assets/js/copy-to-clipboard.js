@@ -19,6 +19,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const pre = codeBlock.parentNode;
     pre.style.position = 'relative';
-    pre.appendChild(button);
+    pre.insertBefore(button, codeBlock);
   });
 });
