@@ -28,3 +28,4 @@ while True:
     time.sleep(0.5)   # Wait for 500ms
     led.value = False # Turn off the LED
     time.sleep(0.5)   # Wait for 500ms
+```
