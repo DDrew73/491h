@@ -21,7 +21,7 @@ Learn how to blink an onboard LED on the Arduino Nano ESP32 using CircuitPython.
 2. Open your preferred code editor.
 
 ### Step 2: Code
-```python
+<pre><code class="language-python">
 import time
 import board
 import digitalio
@@ -35,6 +35,6 @@ while True:
     time.sleep(0.5)   # Wait for 500ms
     led.value = False # Turn off the LED
     time.sleep(0.5)   # Wait for 500ms
-```
+</code></pre>
 
 <script src="/assets/scripts/copyCode.js"></script>
