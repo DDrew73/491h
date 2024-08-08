@@ -1,4 +1,8 @@
+<link rel="stylesheet" type="text/css" href="../../assets/css/styles.css">
+
 # Lab 2: RGB LED Intro
+
+This lab will be your first chance to really exercise the Circuitpython interface to your Arduino Nano. We'll learn about using the REPL interface and about creating and modifying code which lives on your board. 
 
 ## Objective
 - Learn how to interact with your board using the REPL interface 

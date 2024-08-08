@@ -1,3 +1,5 @@
+<link rel="stylesheet" type="text/css" href="assets/css/styles.css">
+
 # ECE 491H: Fundamentals of Robotics and Cyberphysical Systems
 **Instructor:** Dr. Daniel Drew, Assistant Professor, Electrical Engineering\
 **Course Meets:** Mo/We 3:30pm - 4:45pm, KUY 306

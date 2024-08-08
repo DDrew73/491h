@@ -1,7 +1,12 @@
+<link rel="stylesheet" type="text/css" href="../../assets/css/styles.css">
+
 # Lab 1: Getting Started with Circuitpython
 
+In this first lab, you will be setting up the microcontroller toolchain which you will be using throughout this course. Just follow along with the instructions and ask for help if you need it. This lab must be completed by each student individually!
+
 ## Objective
-Get the required software in place to begin programming your microcontroller using Circuitpython.
+- Learn about basic interfacing with the hardware and software sides of your microcontroller
+- Learn to juggle multiple software packages for efficient progression through this course
 
 ## Materials
 - Arduino Nano ESP32

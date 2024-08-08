@@ -1,3 +1,4 @@
+<link rel="stylesheet" type="text/css" href="../../assets/css/styles.css">
 
 # ECE 491H: Syllabus
 
@@ -8,7 +9,7 @@
 | **Course** | ECE 491H: Fundamentals of Robotics and Cyberphysical Systems |
 | **Department** | Electrical and Computer Engineering |
 | **Instructor** | Dr. Daniel Drew |
-| **Prerequisities** | Basic Python<p>Basic Circuits |
+| **Prerequisities** | Basic Python<br>Basic Circuits |
 | **Credit Hours** | 3 |
 | **Semester** | Fall 2024 |
 | **Meets** | MoWe 3:30pm - 4:45pm, KUY 306 |

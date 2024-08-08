@@ -1,3 +1,5 @@
+<link rel="stylesheet" type="text/css" href="../../assets/css/styles.css">
+
 # Lab 3: Digital Inputs and Outputs
 
 ## Objectives

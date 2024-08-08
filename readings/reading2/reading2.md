@@ -1,3 +1,5 @@
+<link rel="stylesheet" type="text/css" href="../../assets/css/styles.css">
+
 ## Past, Present, and Future States of Robotics
 
 This reading assignment is intended to serve as a brief introduction to the history, current challenges, and future directions in the field of robotics. 
