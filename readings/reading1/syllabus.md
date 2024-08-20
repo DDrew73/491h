@@ -69,7 +69,7 @@ Your grade in this course will be based on your completion of reading (text and 
 - Lab quizzes **must** be completed by the Friday the lab was "completed" in class.
 - Lab checkouts **must** be completed by the Friday the lab was "completed" in class. If you cannot get yours done during our normal meeting time, come to office hours on Thursday or make an appointment for Friday.
 
-<u>**There will be no late work accepted in this course.**</u> Try to stay on top of the assignments. The only way you will struggle is if you fall behind and fail to seek help to catch up.
+<u><strong>There will be no late work accepted in this course.</strong></u> Try to stay on top of the assignments. The only way you will struggle is if you fall behind and fail to seek help to catch up.
 
 An example week in the course may look like this:
 - *Monday:* Complete Reading Assignment 1 at home; **Complete Reading Quiz 1 at home.** Begin Lab 1 in class. 

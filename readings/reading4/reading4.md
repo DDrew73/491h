@@ -18,4 +18,4 @@ This reading assignment is intended to serve as an introduction to one of the mo
 - Understand a voltage divider circuit and be able to perform nodal analysis on it
 
 **Supplemental Material:**
-
+- [DACs (YouTube)](https://www.youtube.com/watch?v=Y2OPnrgb0pY)
