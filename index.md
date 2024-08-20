@@ -12,6 +12,7 @@ For more information, please see [the course syllabus](readings/reading1/syllabu
 Note that this is a **live site**; I will be adding Readings and Labs module blocks, and enabling links within modules, as we go through the course. This helps me adjust pacing and content to better fit our progress.
 
 ## Readings
+
 |              Topic                                                                 | Date |
 | :-------                                                                           |:----:|
 |[1. Course Syllabus](readings/reading1/syllabus.md)                                 | 8/26 |
