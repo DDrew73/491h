@@ -18,7 +18,7 @@ Note that this is a **live site**; I will be adding Readings and Labs module blo
 |[1. Course Syllabus](readings/reading1/syllabus.md)                                 | 8/26 |
 |[2. Past, Present, and Future of Robotics](readings/reading2/reading2.md)           | 8/28 |
 |[3. Microcontrollers and Digital Logic](readings/reading3/reading3.md)              | 9/04 |
-|4. Analog-to-Digital Conversion                  | 9/09 |
+|[4. Analog-to-Digital Conversion](readings/reading4/reading4.md)                    | 9/09 |
 |5. Pulse Width Modulation                      | 9/11 |
 
 ## Labs
@@ -28,7 +28,7 @@ Note that this is a **live site**; I will be adding Readings and Labs module blo
 |[1. Installing Circuitpython](labs/lab1/lab1.md)                                    | 8/26 |
 |[2. RGB LED Intro](labs/lab2/lab2.md)                                               | 8/28 |
 |[3. Digital Inputs and Outputs](labs/lab3/lab3.md)                                  | 9/04 |
-|4. Analog Inputs and Outputs: LED DJ Board                    | 9/09, 9/11 | 
+|[4. Analog Inputs and Outputs: LED DJ Board](labs/lab4/lab4.md)                     | 9/09, 9/11 | 
 
 
 <!---
@@ -41,9 +41,9 @@ Note that this is a **live site**; I will be adding Readings and Labs module blo
 |[5. Pulse Width Modulation](readings/reading5/reading5.md)                          | 9/11 |
 |[6. Transduction Principles](readings/reading6/reading6.md)                         | 9/16 |
 |[7. Sensor Readout Circuits](readings/reading7/reading7.md)                         | 9/18 |   
-|[8. MEMS Sensors](readings/reading8/reading8.md)                                    | 9/23 |   <Needs quiz>
-|[9. Digital Communication Protocols](readings/reading9/reading9.md)                 | 9/25 |
-|[10. Distance Sensors](readings/reading10/reading10.md)                             | 9/30 |
+|[8. MEMS Sensors](readings/reading8/reading8.md)                                    | 9/23 |  
+|[9. Digital Communication Protocols](readings/reading9/reading9.md)                 | 9/25 | 
+|[10. Distance Sensors](readings/reading10/reading10.md)                             | 9/30 | <here>
 |[11. Simultaneous Localization and Mapping (SLAM)](readings/reading11/reading11.md) | 10/2 |
 
 ## Labs
@@ -54,8 +54,8 @@ Note that this is a **live site**; I will be adding Readings and Labs module blo
 |[2. RGB LED Intro](labs/lab2/lab2.md)                                               | 8/28 |
 |[3. Digital Inputs and Outputs](labs/lab3/lab3.md)                                  | 9/04 |
 |[4. Analog Inputs and Outputs: LED DJ Board](labs/lab4/lab4.md)                     | 9/09, 9/11 | 
-|[5. Variable Resistance Sensors: Thumb War](labs/lab5/lab5.md)                      | 9/16, 9/18 | <Needs to be finished>
-|[6. Complex Peripherals: Accelerometer Inclination](labs/lab6/lab6.md)              | 9/23, 9/25 |
+|[5. Variable Resistance Sensors: Thumb War](labs/lab5/lab5.md)                      | 9/16, 9/18 |
+|[6. Complex Peripherals: Accelerometer Inclination](labs/lab6/lab6.md)              | 9/23, 9/25 | <here>
 |[7. Sensor Characterization: Ultrasonic Obstacle Detector](labs/lab7/lab7.md)       | 9/30, 10/2 |
 -->
 

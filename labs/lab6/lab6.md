@@ -2,27 +2,28 @@
 
 # Lab 6: Accelerometer Inclination Sensing: The Tilt-a-Maze
 
-Many transducers/sensors convert incoming stimulus into a change in their resistance (e.g., thermistors, photocells, and strain gauges). In this lab, we will work with a force sensitive resistor (FSR) and turn it into the key component for a dynamic game you can play with a friend! Along the way, we'll learn a bit about characterizing variable resistance sensors and doing some coarse online filtering. 
+Tilt detection using an IMU (inertial measurement unit) is critical to a huge number of products - the Wii-mote, quadrotors, and commercial aircraft, to name a few. The three-axis MEMS accelerometer is a critical component of the IMU. In this lab, we will show how the measurements from your IMU can be used to calculate and visualize tilt angle in real time. 
 
 ## Objectives
-- Understand how variable resistance sensors can be used in practice
-- Learn some basic characterization and calibration techniques for noisy sensors
-- Understand the interaction between readout circuit design and full-scale range of a sensor
-- Learn to implement non-blocking, dynamic code for multiple sensor streams
+- Understand how a 3-axis accelerometer can be used to detect tilt angle
+- Understand different ways of improving the accuracy of tilt detection (e.g., moving average, dc offset correction)
+- Learn how to interface with sensor breakout boards using I2C
 
 ## Materials
 - Arduino Nano ESP32
 - USB cable
 - Breadboard
-- 10k resistor
-- FSR
+- MMA8451 3-axis accelerometer breakout board
+- Potentiometer
 - MM jumper wires
 
 ## Deliverables
-- A "Thumb War" game which keeps track of two players' input and signals a WIN (red for Player 1, blue for Player 2) when a randomized input condition is reached for a set time duration, then resets. 
+- A functional "Tilt-a-Maze" ASCII game which stops the virtual ball from moving through walls, cycles through a list of mazes when a goal is reached, and has dynamic sensitivity adjustment with a potentiometer.
 
 ## Extensions
-- Make an ASCII display with a persistent scoreboard that displays over serial, to keep track of multiple games in a row (e.g., "best two out of three")
+- Make it so that your virtual "ball" can jump over walls if you press a button.
+- Add a moving obstacle (a "monster") which the player cannot touch.
+- Procedurally generate new mazes without having to specify them beforehand. 
 
 ## Instructions
 
@@ -31,86 +32,111 @@ Many transducers/sensors convert incoming stimulus into a change in their resist
 
 2. Open Mu. If you have any problems detecting your board, return to Lab 1!
 
-### Step 2: Getting Force From Your FSR
-1. Set up a voltage divider with a 10K resistor and your FSR. 
+3. First we need the supporting library to use the IMU. Since you can't use something like `pip` on your board (it's not connected to the internet!), you will have to download the library and manually add it to your CIRCUITPY drive in the `lib` folder. [Here is a link](assets/adafruit_mma8451.py) to download the `adafruit_mm8451.py` file you will need.
 
-2. Take an analog measurement of the output voltage without touching the FSR. <u>What does this imply about the current resistance of your FSR?</u>
+4. Hook up the IMU breakout board with the x axis (labeled on the board) pointed towards the top of your Arduino (where the USB cable connects). Connect 3.3V to VIN and GND (white shaded pin) to GND on the board. 
 
-3. Squeeze the FSR as hard as you can, and while doing so, take another analog measurement of the output voltage. <u>What does this imply about the current resistance of your FSR?</u>
+5. Uh oh, there are no SDA or SCL labels on your Arduino! In your REPL interface, `import board`, and check `dir(board)`.Call the `board.SCL` and `board.SDA` manually (just type them) to <u>find out what pins they correspond to</u>, then hook up your IMU! 
 
-4. Let's try and convert our squeeze into a gram-force value -- actually using the FSR as a useful sensor! Luckily, the datasheet for this FSR includes a calibration curve for load force versus resistance:
+6. If everything was hooked up correctly and the library was successfully put on your drive, this code snippet should execute in REPL with no problem:
 
-<img src="assets/fsr_curve.jpg" alt="FSR resistance versus force curve" width="400"/>
-
-Given that this is a log-log plot, clearly this isn't a nice linear function. Again, luckily, Circuitpython comes with a lightweight `numpy` implementation onboard, called `ulab`. Go ahead and `import ulab`, then explore what it offers with `dir(ulab)`. For example, to see what standard `numpy` functions come with it, try `dir(ulab.numpy)`. 
-
-5. We're going to try and fit a polynomial to the datasheet curve using `ulab.numpy.polyfit`. Start with this code skeleton, and find the polynomial fit values:
     ```python
-    from ulab import numpy as np
-
-    x = np.array([load1, load2, load3, load4, load5, load7, load8, load9, load10])
-    y = np.array([res1, res2, res3, res4, res5, res6, res7, res8, res9, res10])
-    coefs = np.polyfit(x,y,5)
+    import board
+    import adafruit_mma8451
+    i2c = board.I2C()
+    sensor = adafruit_mma8451.MMA8451(i2c)
     ```
 
-Use these coefficients to calculate estimated resistance for some test points; you can use values which are "easy" to read off the graph, like 20g, 200g, 3000g. <u>How do your estimated resistances look compared to the datasheet values?</u> <br>*Hint:* Try using the `np.polyval()` function. <br>*Hint:* [Here is some documentation of ulab.numpy functions](https://micropython-ulab.readthedocs.io/en/latest/numpy-functions.html#polyfit)
+### Step 2: Building Intuition
+1. Check the acceleration measurements on the three axes using `sensor.acceleration`. <u> Based on these measurements, which one corresponds to the z axis?</u> 
 
-6. I'm sure many of you realized that wasn't going to work -- a linear function on a log-log scale is a power-law distribution which follows the formula *y = ax^k*. Follow the procedure below to find values for *a* and *k*:
-    1. Calculate the natural log of both the **x** and **y** arrays.<br>*Hint:* Try using `np.log()`
-    2. Use linear regression to find the first degree polynomial fit to the transformed data. <br>*Hint:* What degree polynomial is this for your polyfit call? (*y=mx+b*)
-    3. Calculate *a* of the power-law using *a* = np.exp(*b*). *k* is equal to *m*. 
+2. Rotate your breadboard in 90 degree increments about the x- and y- axes (as depicted on the breakout board) and take new `sensor.acceleration` measurements so you get a sense of how these numbers work.
 
-7. Check the fit with the test points you grabbed for Step 5 using this power-law equation. Things should look much better now. <br>*Hint:* Things will be easier if you define a function called `power_law' which does the computation!
+### Step 3. Building Out Infrastructure
 
-8. So now, given a load, you can give the resistance the FSR should read. Uh oh! We actually want the inverse of that, don't we?! Repeat the power law fit so that, given a *resistance*, you can predict the *applied force*. These coefficients won't change, so save them as constants that don't need to be rederived in your code. 
+1. Let's switch to writing persistent code in `code.py` if you haven't already. Write a function which converts the `sensor.acceleration` values to units of "g's" and returns them. <br> *Hint:*Remember from elementary physics that one "g" equals 9.8m/s^2. 
 
-9. We can't actually measure the resistance directly, but we can infer it from the voltage divider analog reading. Convert the `analog_in.value` to a resistance of the FSR, then convert *that* to an applied force. <u>What is the maximum force you can detect a squeeze of?</u> <br>*Hint:* Remember your voltage divider equation; do some algebra to solve for the resistance of the FSR. Remember your Vin is 3.3V. <br>*Hint:* Remember your units; if you calculated your power law coefficients for kOhms, then those coefficients will only work for inputs of kOhms!
+2. Write a function which calculates and returns three inclination angles using Equations 11, 12, and 13 in Reading 9. <br> *Hint:* `ulab.numpy` has `atan`. <br> *Hint:* It's hard to read things in radians! Convert to degrees.
 
-### Step 3: Averaging and Input Banding
+3. Theta, phi, and psi are not very intuitive measurements for pose. Write a function which converts these into Euler angles: roll, pitch, and yaw. If it helps, consider the USB cable side of your Arduino the "nose" of an aircraft. "Pitch" is moving the nose up or down, "roll" is "flipping over sideways", and "yaw" is rotating about the center axis. <br> *Hint:* Rotate your breadboard in a circle around the center axis (i.e., imagine the "z" axis which points "up" from it). Do any of the readings change?
 
-1. Set up your code so that you continously print the estimated force value with a brief pause afterward, if you haven't already. Try to squeeze and get a constant force; pretty tricky! 
+<img src="assets/euler_plane.png" alt="Euler angles labeled on an airplane" width="400"/>
 
-2. Let's do the simplest signal processing possible; instead of printing a single reading, write a function which averages an arbitrary number of readings in a row. We will discuss filtering in more detail later, but remember that sometimes simple is best! 
+4. We are interested in the angle of your *breadboard*, not the angle of the *breakout board*. If it was mounted at an angle, like if your clumsy professor soldered them weirdly, then you will get spurious readings relative to your breadboard position! Write a function which calibrates your output using some initial data taken when your breadboard is resting. 
 
-3. Adjust the averaging window until you can reliably keep the force estimate within some reasonable tolerance. We're going to use that value to set up some input thresholding. You may have to adjust the `time.sleep` value (or remove it altogether) to keep the measurement feeling dynamic!
+5. You may notice significant jitter in your calculations when moving the board around, especially if you don't have any `time.sleep` built into the loop. Write a function to average multiple data points in a row to smooth this out. <br> *Hint:* While you did something like this in the prior lab, it can be hard to work with python tuples in this way. Try stuffing your `sensor.acceleration` into a numpy array using `np.array(sensor.acceleration)` for an easier time processing it.
 
-4. Specify a target force as a constant. Write a conditional to check whether your press is within the range of that force plus/minus the tolerance you found in the prior step; if it is, print a "Winner!". 
+6. You may experience catastrophic errors in your inclination angle calculation math (e.g., divide by zero) at large tilt angles. Add [try: except: blocks](https://www.w3schools.com/python/python_try_except.asp) to this function so that if there is an error, they just default to returning 0. 
 
-### Step 4: Turning It Into A Game
+7. Take a breath- that was a lot of coding! Make sure that your code works correctly by zooming your board around in the air and evaluating what prints out. Cool!
 
-1. Randomly initialize the target force to a value within your detectable range. 
+### Step 4: The Basic Tilt-a-Maze Game 
 
-2. Giving someone the win for an instaneous hit of the target isn't great; it could be a fluke! Make it so that they only win if they hold the correct force value for a set amount of time. <br>*Hint:* Use `time.monotonic()` and a state flag which keeps track of whether the user is "newly" in-bounds to begin accumulating time.
+1. Implement a basic tilt-a-maze game whic has only outer perimeter walls and no goal position using these code primitives:
 
-3. Instead of writing "WINNER!", make the RGB LED light up when there is a winner for a set amount of time, then restart the game (i.e., randomize a new target and go again).
+A basic maze geometry, where `#` is a boundary. 
 
-4. Random numbers are more "streaky" than you might think. We want to fudge things a bit by making sure the new random target is never already in the tolerance window we've defined; that would be no fun at all.
-
-5. If you haven't figured this out already, it will be very helpful to continously print multiple things out on the same line for your game. Try printing the target, the current value, and how long you've been "in bounds", in one line. 
-
-### Step 5: Multiplayer Gaming
-
-
-### Some Notes on Code Structure
-When we start working with this many inputs, we need to think more carefully about our code architecture. Here's an example, in pseudocode:
+```python
+maze = [
+    "#############",
+    "#           #",
+    "#           #",
+    "#           #",
+    "#           #",
+    "#           #",
+    "#           #",
+    "#           #",
+    "#############"
+]
 ```
-import everything
 
-configure everything
+A function for printing the maze you have defined, as well as the player marker `O`. Note that you will need to pre-define a starting position for this to work. 
 
-initialize state flag variables (e.g., "is_blinking = False")
-
-define functions
-
-while true:
-    read all inputs (e.g., button 1 value, button 2 value, analog input)
-
-    process inputs
-        e.g., if button 1 is pressed, randomize color
-        e.g., if button 2 is pressed, change state flag; don't forget debouncing!
-        e.g., convert potentiometer input to setRGB
-
-    if (state 1 condition):
-        implement blinking
-
+```python
+def print_maze():
+    for y in range(len(maze)):
+        row = ""
+        for x in range(len(maze[0])):
+            if x == player_x and y == player_y:
+                row += "O"
+            else:
+                row += maze[y][x]
+        print(row)
 ```
+
+A function for moving the player marker based on accelerometer tilt:
+
+```python
+def move_player(roll, pitch):
+    global player_x, player_y
+
+    # Convert roll and pitch into movement directions
+    if pitch < -5:  # Move up
+        new_y = player_y - 1
+        if maze[new_y][player_x] in " ":
+            player_y = new_y
+    elif pitch > 5:  # Move down
+        new_y = player_y + 1
+        if maze[new_y][player_x] in " ":
+            player_y = new_y
+    if roll < -5:  # Move left
+        new_x = player_x - 1
+        if maze[player_y][new_x] in " ":
+            player_x = new_x
+    elif roll > 5:  # Move right
+        new_x = player_x + 1
+        if maze[player_y][new_x] in " ":
+            player_x = new_x
+```
+2. Verify that your basic game works. Read the code carefully, especially the `move_player` function. Modify this code and your maze definition so that there is a goal position denoted by an `X`. If the player reaches the `X`, let them know they have won. <br>*Hint:* If you end up in a situation where your ball can get next to the `X` but never "enter" it, consider your allowable moves specified in the function. 
+
+### Step 5: Adding Complexity
+
+1. When the player wins, restart with a new maze, randomly chosen from a list of at least 3 which you create beforehand. 
+
+2. Add dynamic sensitivity adjustment to your game using a potentiometer. There are lots of ways to do this; the simplest is to adjust the threshold of angle which counts as a "move" based on the reading. 
+
+3. Show off your creation to your friends, professor, family, dog, etc. Nice job, you made an interactive electronic game!
+
+
+

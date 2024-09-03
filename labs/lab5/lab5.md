@@ -32,7 +32,7 @@ Many transducers/sensors convert incoming stimulus into a change in their resist
 2. Open Mu. If you have any problems detecting your board, return to Lab 1!
 
 ### Step 2: Getting Force From Your FSR
-1. Set up a voltage divider with a 10K resistor and your FSR. 
+1. Set up a voltage divider with a 10K resistor and your FSR. I set up the divider with the FSR on "bottom" as R2.
 
 2. Take an analog measurement of the output voltage without touching the FSR. <u>What does this imply about the current resistance of your FSR?</u>
 
@@ -55,7 +55,7 @@ Given that this is a log-log plot, clearly this isn't a nice linear function. Ag
 
 Use these coefficients to calculate estimated resistance for some test points; you can use values which are "easy" to read off the graph, like 20g, 200g, 3000g. <u>How do your estimated resistances look compared to the datasheet values?</u> <br>*Hint:* Try using the `np.polyval()` function. <br>*Hint:* [Here is some documentation of ulab.numpy functions](https://micropython-ulab.readthedocs.io/en/latest/numpy-functions.html#polyfit)
 
-6. I'm sure many of you realized that wasn't going to work -- a linear function on a log-log scale is a power-law distribution which follows the formula *y = ax^k*. Follow the procedure below to find values for *a* and *k*:
+6. I'm sure many of you realized that wasn't going to work -- a function which *looks* linear on a log-log scale is actually a power-law distribution which follows the formula *y = ax^k*. Follow the procedure below to find values for *a* and *k*:
     1. Calculate the natural log of both the **x** and **y** arrays.<br>*Hint:* Try using `np.log()`
     2. Use linear regression to find the first degree polynomial fit to the transformed data. <br>*Hint:* What degree polynomial is this for your polyfit call? (*y=mx+b*)
     3. Calculate *a* of the power-law using *a* = np.exp(*b*). *k* is equal to *m*. 
@@ -70,7 +70,7 @@ Use these coefficients to calculate estimated resistance for some test points; y
 
 1. Set up your code so that you continously print the estimated force value with a brief pause afterward, if you haven't already. Try to squeeze and get a constant force; pretty tricky! 
 
-2. Let's do the simplest signal processing possible; instead of printing a single reading, write a function which averages an arbitrary number of readings in a row. We will discuss filtering in more detail later, but remember that sometimes simple is best! 
+2. Let's do the simplest signal processing possible; instead of printing a single reading, write a function which averages an arbitrary number of readings in a row. We will discuss filtering in more detail later, but remember that sometimes simple is best. 
 
 3. Adjust the averaging window until you can reliably keep the force estimate within some reasonable tolerance. We're going to use that value to set up some input thresholding. You may have to adjust the `time.sleep` value (or remove it altogether) to keep the measurement feeling dynamic!
 
@@ -90,27 +90,6 @@ Use these coefficients to calculate estimated resistance for some test points; y
 
 ### Step 5: Multiplayer Gaming
 
+1. Find a partner and turn this into a two player game using their FSR. What code can you reuse? What functions would have made your life easier when extending this game to a second player? 
 
-### Some Notes on Code Structure
-When we start working with this many inputs, we need to think more carefully about our code architecture. Here's an example, in pseudocode:
-```
-import everything
-
-configure everything
-
-initialize state flag variables (e.g., "is_blinking = False")
-
-define functions
-
-while true:
-    read all inputs (e.g., button 1 value, button 2 value, analog input)
-
-    process inputs
-        e.g., if button 1 is pressed, randomize color
-        e.g., if button 2 is pressed, change state flag; don't forget debouncing!
-        e.g., convert potentiometer input to setRGB
-
-    if (state 1 condition):
-        implement blinking
-
-```
+2. Complete the lab Deliverable. 
