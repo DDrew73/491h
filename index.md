@@ -19,7 +19,7 @@ Note that this is a **live site**; I will be adding Readings and Labs module blo
 |[2. Past, Present, and Future of Robotics](readings/reading2/reading2.md)           | 8/28 |
 |[3. Microcontrollers and Digital Logic](readings/reading3/reading3.md)              | 9/04 |
 |[4. Analog-to-Digital Conversion](readings/reading4/reading4.md)                    | 9/09 |
-|5. Pulse Width Modulation                      | 9/11 |
+|[5. Pulse Width Modulation](readings/reading5/reading5.md)                       | 9/11 |
 
 ## Labs
 
