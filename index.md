@@ -22,6 +22,8 @@ Note that this is a **live site**; I will be adding Readings and Labs module blo
 |[5. Pulse Width Modulation](readings/reading5/reading5.md)                          | 9/11 |
 |[6. Transduction Principles](readings/reading6/reading6.md)                         | 9/16 |
 |[7. Sensor Readout Circuits](readings/reading7/reading7.md)                         | 9/18 |   
+|[8. MEMS Sensors](readings/reading8/reading8.md)                                    | 9/23 |  
+|[9. Digital Communication Protocols](readings/reading9/reading9.md)                 | 9/25 | 
 
 ## Labs
 
@@ -32,6 +34,7 @@ Note that this is a **live site**; I will be adding Readings and Labs module blo
 |[3. Digital Inputs and Outputs](labs/lab3/lab3.md)                                  | 9/04 |
 |[4. Analog Inputs and Outputs: LED DJ Board](labs/lab4/lab4.md)                     | 9/09, 9/11 | 
 |[5. Variable Resistance Sensors: Thumb War](labs/lab5/lab5.md)                      | 9/16, 9/18 |
+|[6. Complex Peripherals: Accelerometer Inclination](labs/lab6/lab6.md)              | 9/23, 9/25 |
 
 
 <!---
