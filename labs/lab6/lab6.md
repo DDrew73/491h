@@ -56,7 +56,7 @@ Tilt detection using an IMU (inertial measurement unit) is critical to a huge nu
 
 1. Let's switch to writing persistent code in `code.py` if you haven't already. Write a function which converts the `sensor.acceleration` values to units of "g's" and returns them. <br> *Hint:*Remember from elementary physics that one "g" equals 9.8m/s^2. 
 
-2. Write a function which calculates and returns three inclination angles using Equations 11, 12, and 13 in Reading 9. <br> *Hint:* `ulab.numpy` has `atan`. <br> *Hint:* It's hard to read things in radians! Convert to degrees.
+2. Write a function which calculates and returns three inclination angles using Equations 11, 12, and 13 in Reading 8. <br> *Hint:* `ulab.numpy` has `atan`. <br> *Hint:* It's hard to read things in radians! Convert to degrees.
 
 3. Theta, phi, and psi are not very intuitive measurements for pose. Write a function which converts these into Euler angles: roll, pitch, and yaw. If it helps, consider the USB cable side of your Arduino the "nose" of an aircraft. "Pitch" is moving the nose up or down, "roll" is "flipping over sideways", and "yaw" is rotating about the center axis. <br> *Hint:* Rotate your breadboard in a circle around the center axis (i.e., imagine the "z" axis which points "up" from it). Do any of the readings change?
 
