@@ -16,9 +16,11 @@ Ultrasonic rangefinding was one of the first techniques for mobile robot obstacl
 - HC-SR04 ultrasonic range sensor breakout board
 - Ruler
 - MM jumper wires
+- 10k resistor
+- potentiometer
 
 ## Deliverables
-- Code that continuously graphs the ultrasonic rangefinder's distance measurement (correctly converted), corrects for any detected nonlinearity, and turns on an LED with varying intensity depending on obstacle distance
+- Code that continuously outputs the ultrasonic rangefinder's distance measurement in centimeters using a custom function and turns on an LED with varying intensity depending on obstacle distance
 
 ## Extensions
 - Walk around the room using only your breadboard for guidance, if you dare! 
@@ -30,111 +32,47 @@ Ultrasonic rangefinding was one of the first techniques for mobile robot obstacl
 
 2. Open Mu. If you have any problems detecting your board, return to Lab 1!
 
-3. First we need the supporting library to use the IMU. Since you can't use something like `pip` on your board (it's not connected to the internet!), you will have to download the library and manually add it to your CIRCUITPY drive in the `lib` folder. [Here is a link](assets/adafruit_mma8451.py) to download the `adafruit_mm8451.py` file you will need.
+3. First we need the supporting library to use the IMU. Since you can't use something like `pip` on your board (it's not connected to the internet!), you will have to download the library and manually add it to your CIRCUITPY drive in the `lib` folder. [Here is a link](assets/adafruit_hcsr04.py) to download the `adafruit_hcsr04.py` file you will need. You will also need to add the entire `adafruit_bus_device` folder linked [here](assets/adafruit_bus_device.zip).
 
-4. Hook up the IMU breakout board with the x axis (labeled on the board) pointed towards the top of your Arduino (where the USB cable connects). Connect 3.3V to VIN and GND (white shaded pin) to GND on the board. 
+### Step 2: Wire Up The Sensor
+1. This sensor is a bit tricky to use for us, because it operates at 5V while our Arduino runs at 3.3V. Luckily, the `VBUS` pin on your Arduino will pass the USB voltage (5V) directly through. Connect `VBUS` to the ultrasonic sensor's `Vcc`, and `GND` to `Gnd`. 
 
-5. Uh oh, there are no SDA or SCL labels on your Arduino! In your REPL interface, `import board`, and check `dir(board)`.Call the `board.SCL` and `board.SDA` manually (just type them) to <u>find out what pins they correspond to</u>, then hook up your IMU! 
+2. Connect `Trig` to a digital pin.
 
-6. If everything was hooked up correctly and the library was successfully put on your drive, this code snippet should execute in REPL with no problem:
+3. The `Echo` output of the ultrasonic sensor will come out at 5V, so we need to convert that to a voltage below 3.3V. Use the potentiometer and 10k resistor as a voltage divider to do this. Remember, the total resistance of our potentiometer is 10k, so we can use these together to halve the voltage. Set this circuit up and connect the Vout node to a digital pin of your Arduino. The Vin node will be the `Echo` output of the ultrasonic sensor.
 
-    ```python
-    import board
-    import adafruit_mma8451
-    i2c = board.I2C()
-    sensor = adafruit_mma8451.MMA8451(i2c)
-    ```
-
-### Step 2: Building Intuition
-1. Check the acceleration measurements on the three axes using `sensor.acceleration`. <u> Based on these measurements, which one corresponds to the z axis?</u> 
-
-2. Rotate your breadboard in 90 degree increments about the x- and y- axes (as depicted on the breakout board) and take new `sensor.acceleration` measurements so you get a sense of how these numbers work.
-
-### Step 3. Building Out Infrastructure
-
-1. Let's switch to writing persistent code in `code.py` if you haven't already. Write a function which converts the `sensor.acceleration` values to units of "g's" and returns them. <br> *Hint:*Remember from elementary physics that one "g" equals 9.8m/s^2. 
-
-2. Write a function which calculates and returns three inclination angles using Equations 11, 12, and 13 in Reading 9. <br> *Hint:* `ulab.numpy` has `atan`. <br> *Hint:* It's hard to read things in radians! Convert to degrees.
-
-3. Theta, phi, and psi are not very intuitive measurements for pose. Write a function which converts these into Euler angles: roll, pitch, and yaw. If it helps, consider the USB cable side of your Arduino the "nose" of an aircraft. "Pitch" is moving the nose up or down, "roll" is "flipping over sideways", and "yaw" is rotating about the center axis. <br> *Hint:* Rotate your breadboard in a circle around the center axis (i.e., imagine the "z" axis which points "up" from it). Do any of the readings change?
-
-<img src="assets/euler_plane.png" alt="Euler angles labeled on an airplane" width="400"/>
-
-4. We are interested in the angle of your *breadboard*, not the angle of the *breakout board*. If it was mounted at an angle, like if your clumsy professor soldered them weirdly, then you will get spurious readings relative to your breadboard position! Write a function which calibrates your output using some initial data taken when your breadboard is resting. 
-
-5. You may notice significant jitter in your calculations when moving the board around, especially if you don't have any `time.sleep` built into the loop. Write a function to average multiple data points in a row to smooth this out. <br> *Hint:* While you did something like this in the prior lab, it can be hard to work with python tuples in this way. Try stuffing your `sensor.acceleration` into a numpy array using `np.array(sensor.acceleration)` for an easier time processing it.
-
-6. You may experience catastrophic errors in your inclination angle calculation math (e.g., divide by zero) at large tilt angles. Add [try: except: blocks](https://www.w3schools.com/python/python_try_except.asp) to this function so that if there is an error, they just default to returning 0. 
-
-7. Take a breath- that was a lot of coding! Make sure that your code works correctly by zooming your board around in the air and evaluating what prints out. Cool!
-
-### Step 4: The Basic Tilt-a-Maze Game 
-
-1. Implement a basic tilt-a-maze game whic has only outer perimeter walls and no goal position using these code primitives:
-
-A basic maze geometry, where `#` is a boundary. 
+4. Let's make sure we hooked it up correctly. Run this code in REPL and make sure it executes, but be sure to change the `trigger_pin` and `echo_pin` to agree with the digital pins you used earlier!
 
 ```python
-maze = [
-    "#############",
-    "#           #",
-    "#           #",
-    "#           #",
-    "#           #",
-    "#           #",
-    "#           #",
-    "#           #",
-    "#############"
-]
+import board
+import adafruit_hcsr04
+sonar = adafruit_hcsr04.HCSR04(trigger_pin=board.D5, echo_pin=board.D6)
 ```
 
-A function for printing the maze you have defined, as well as the player marker `O`. Note that you will need to pre-define a starting position for this to work. 
+### Step 3: Distance Measurements
+1. Write code to continously output distance measurements in centimeters using ``sonar.distance``. 
 
-```python
-def print_maze():
-    for y in range(len(maze)):
-        row = ""
-        for x in range(len(maze[0])):
-            if x == player_x and y == player_y:
-                row += "O"
-            else:
-                row += maze[y][x]
-        print(row)
-```
+2. Verify that this measurement is accurate using your ruler. Play around; when does the sensor struggle? When does it work really well?
 
-A function for moving the player marker based on accelerometer tilt:
+3. We don't need to use external libraries for every sensor we find, we can write our own driver code! This is an important skill to develop, because sometimes external libraries won't exist or won't be compatible with your system.
 
-```python
-def move_player(roll, pitch):
-    global player_x, player_y
+4. You can find the technical datasheet for the HCSR04 [here](assets/HCSR04.pdf). The most important part for us to internalize will be the information in the **Timing diagram** section. 
 
-    # Convert roll and pitch into movement directions
-    if pitch < -5:  # Move up
-        new_y = player_y - 1
-        if maze[new_y][player_x] in " ":
-            player_y = new_y
-    elif pitch > 5:  # Move down
-        new_y = player_y + 1
-        if maze[new_y][player_x] in " ":
-            player_y = new_y
-    if roll < -5:  # Move left
-        new_x = player_x - 1
-        if maze[player_y][new_x] in " ":
-            player_x = new_x
-    elif roll > 5:  # Move right
-        new_x = player_x + 1
-        if maze[player_y][new_x] in " ":
-            player_x = new_x
-```
-2. Verify that your basic game works. Read the code carefully, especially the `move_player` function. Modify this code and your maze definition so that there is a goal position denoted by an `X`. If the player reaches the `X`, let them know they have won. <br>*Hint:* If you end up in a situation where your ball can get next to the `X` but never "enter" it, consider your allowable moves specified in the function. 
+5. Set up a digital pin as an output to use as the trigger pin. Set up a digital pin as an input to use as the echo pin. 
 
-### Step 5: Adding Complexity
+6. Write a function that initiates an ultrasonic reading by raising the trigger pin high for 10 microseconds, then waiting for the echo pin to go high, then calculating how long the echo pin remained high. The function should return the distance in centimeters by dividing the time the echo pin was high, in microseconds, by 58. <br> **Hint:** The `time.monotonic_ns()` function will return time in nanoseconds instead of seconds, for when you need this level of precision. Remember, microseconds are nanoseconds / 1000. <br> **Hint:** Based on the datasheet `we suggest to use over 60ms measurement cycle`, build in a "timeout" so you don't get errors. One way to do this is to always wait 60 ms or longer while waiting for the echo pin return, using a while loop wrapper.
 
-1. When the player wins, restart with a new maze, randomly chosen from a list of at least 3 which you create beforehand. 
+7. Continously print this new measurement. Verify that this measurement is accurate using your ruler.
 
-2. Add dynamic sensitivity adjustment to your game using a potentiometer. There are lots of ways to do this; the simplest is to adjust the threshold of angle which counts as a "move" based on the reading. 
+### Step 4: Deriving Scale Factors
+1. Let's pretend the datasheet *didn't* tell us to divide the reading by 58. I'll tell you that **the duration of the `ECHO` pulse being high is proportional to the distance in centimeters.** I want you to use your ruler and the `np.polyfit` function from Lab 5 to find the slope of the duration in microseconds (y axis) and distance (centimers) curve. 
 
-3. Show off your creation to your friends, professor, family, dog, etc. Nice job, you made an interactive electronic game!
+2. Collect at least five data points to construct this curve. Three ways to do this: Manually, by writing things down; programatically, by filling an array with a set delay between measurements; and with a hybrid approach, where we could try using `distance = int(input("Enter the current distance in centimeters:\n"))` and then constructing an array of (distance, pulse duration) points. I encourage you to do that last thing, because it's fun.
 
+3. Fit a first degree polynomial to your data. What is the slope of the line? 
 
+4. The ultrasonic wave must travel to the target then return. With this in mind, write down the equation for calculating the distance based on the speed of sound. Make the units match by converting the time to microseconds and the distance to centimeters. Notice anything? 
+
+### Step 5: Obstacle Detector
+1. Imagine this is an obstacle detector for an autonomous robot. Make the RED LED get more or less bright depending on how close you are to an object. Set the scaling up correctly so that the LED is all the way *on* at a distance of 5 cm or less, and all the way *off* at a distance of over 100 cm. 
 
