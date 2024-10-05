@@ -26,6 +26,8 @@ Note that this is a **live site**; I will be adding Readings and Labs module blo
 |[9. Digital Communication Protocols](readings/reading9/reading9.md)                 | 9/25 | 
 |[10. Distance Sensors](readings/reading10/reading10.md)                             | 9/30 | 
 |[11. Simultaneous Localization and Mapping (SLAM)](readings/reading11/reading11.md) | 10/2 |
+|[12. DC Motors)](readings/reading12/reading12.md)                                   | 10/7 |
+|[13. Servo Motors](readings/reading13/reading13.md)                                 | 10/9 |
 
 ## Labs
 
