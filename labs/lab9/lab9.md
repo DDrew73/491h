@@ -1,6 +1,6 @@
 <link rel="stylesheet" type="text/css" href="../../assets/css/styles.css">
 
-# Lab 8: Exploring Other Actuators: Piezo Piano
+# Lab 9: Exploring Other Actuators: Piezo Piano
 
 Digital sound production is all around us -- I'm listening to music from my computer speakers as I write this! Piezoelectric actuators are some of the simplest possible speakers, and their amenability to miniaturization means that they are ubiquitous. Because of their low fidelity, they are mostly just used as annoying buzzers and alarms. Let's make some music instead.
 
