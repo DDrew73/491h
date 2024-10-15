@@ -24,6 +24,7 @@ Digital sound production is all around us -- I'm listening to music from my comp
 ## Deliverables
 - Play a song of your choice which repeats when finished (or a different song plays after it finishes)
 - The potentiometer dynamically adjusts the BPM of the song playback
+- One of the two options described in Step 5
 
 ## Extensions
 - Do the *other* optional bit at the end as well.
