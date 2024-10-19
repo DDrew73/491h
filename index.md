@@ -30,6 +30,8 @@ Note that this is a **live site**; I will be adding Readings and Labs module blo
 |[13. Servo Motors](readings/reading13/reading13.md)                                 | 10/9 |
 |[14. The Piezoelectric Effect](readings/reading14/reading14.md)                     | 10/14 |
 |[15. Other Important Actuators](readings/reading15/reading15.md)                    | 10/16 |
+|[16. Motor Driver Circuits](readings/reading16/reading16.md)                        | 10/21 |
+|[17. Encoders](readings/reading17/reading17.md)                                     | 10/23 |
 
 
 ## Labs
