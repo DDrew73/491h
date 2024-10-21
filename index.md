@@ -47,5 +47,6 @@ Note that this is a **live site**; I will be adding Readings and Labs module blo
 |[7. Sensor Characterization: Ultrasonic Obstacle Detector](labs/lab7/lab7.md)       | 9/30, 10/2 |
 |[8. Sensor and Actuator Integration: The Powerglove](labs/lab8/lab8.md)             | 10/7, 10/9 |
 |[9. Exploring Other Actuators: Piezo Piano](labs/lab9/lab9.md)                      | 10/14, 10/16|
+|[10. DC Motor Driver Circuits: The H Bridge](labs/lab10/lab10.md)                   | 10/21, 10/23|
 
 
