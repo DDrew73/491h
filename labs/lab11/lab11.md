@@ -1,44 +1,28 @@
 <link rel="stylesheet" type="text/css" href="../../assets/css/styles.css">
 
 # Lab 11: Feedback Control: DC Motor PID
-
-Example of a working library:
-https://github.com/Copper280z/CircuitPython_simple-pid
-https://github.com/Copper280z/CircuitPython_simple-pid/blob/master/simple_pid/PID.py
-
-Measure encoder with breakbeam t-slot
-Convert encoder reading into RPM
-Measure and visualize RPM over a 5 second runtime using the serial plotter
-Construct PID function in pieces
-    Proportional, Integral, Derivative buildup 
-Provide sample code architecture
-    calcRPM, updatePID
-Quantify rise time, overshoot, and settling time, using numpy analysis of collected RPM vs time. 
-Tune your PID to hit some specifications 
-
+Feedback control is critical for safe and effective use of (most) cyberphysical systems. In this lab, we will learn the basics of PID controller deployment and tuning using hardware which is, obviously, applicable to robotics. If done correctly, this exact code could form the basis for a very capable wheeled robot! 
 
 ## Objectives
-- Understand how to translate motor commands to h bridge inputs
-- Learn about the most important motor driver circuit on the planet
-- Understand a fundamental component of mobile robots
+- Understand how to implement closed loop feedback control of dc motors using an encoder
+- Understand basic tuning principles for PID controllers
+- Learn how to read and extract quantiative information about feedback-controlled processes
 
 ## Materials
 - Arduino Nano ESP32
 - USB cable
 - Breadboard
-- Accelerometer breakout
 - MM jumper wires
-- Potentiometer
-- Button
+- Slotted encoder disk
+- T-Slot interrupter with cable
 - DC motor
+- Wheel
 
 ## Deliverables
-ONE OF:
-- Your accelerometer acts as a tilt controller for moving the motor forward/backward based on pitch of your breadboard. A button acts as an "emergency stop" for the motor whenever it is pressed.
-- Your potentiometer controls the speed from 0-100, forward *and* backward (e.g., -100 to 100), with one full turn. A button acts as an "emergency stop" for the motor whenever it is pressed.
+- A tuned PID controller for wheel RPM which can hit any of the RPM targets I give you during checkout. You should have made an effort to minimize rise time, overshoot, and settling time. 
 
 ## Extensions
-- Do the *other* optional bit at the end as well.
+- Write code to *automatically* tune your PID controller based on the measured output. 
 
 ## Instructions
 
@@ -49,33 +33,103 @@ ONE OF:
 
 3. As you probably noticed from the prior lab, I am starting to make my instructions more open-ended. I am trusting you to remember what you did in prior labs and bring that knowledge (and code!) to bear here. 
 
-4. The wiring on this board is more complicated than some others you have used, so pay close attention to the pinout instructions [here](https://learn.adafruit.com/adafruit-tb6612-h-bridge-dc-stepper-motor-driver-breakout/pinouts). Wiring this up correctly to drive a single DC motor is your first task! **Note: My USB port didn't like the current draw from the motor when I connected `VM` to `VBUS`. This lab will work fine if you connect `VM` to `3.3V` instead, but try `VBUS` first, because it will work better! It's bad practice to connect your motor to the `3.3V` output of an Arduino. 
 
+### Step 2: Setting Up the Encoder
+1. We first need to wire up the t-slot interrupter. Connect the brown wire to `VBUS`, the pink wire to `VBUS`, the black wire to a digital input with a pullup enbaled, and the blue wire to `GND`. 
 
-### Step 2: The setMotor function
-1. Write a function `setMotor(motorNum, dutyCycle)` which accepts `A` or `B` for `motorNum` and an integer from -100 to 100 for `dutyCycle`. Use the truth table in the [datasheet](https://cdn-shop.adafruit.com/datasheets/TB6612FNG_datasheet_en_20121101.pdf), reproduced below, to correctly set the inputs to the H-bridge for turning the motor forward and backward.
+2. Let's write some quick test code to understand how this element works. In a loop, monitor and print the state of the output wire (black) with a short (10ms) delay. Also, if you look on the side of the interrupter, you should see a red LED. 
+
+3. Slowly rotate the slotted disc inside the T-slot. When a slot is over the beam, what happens? When the beam is blocked, what happens? 
+
+4. Connect your disc and wheel to your DC motor by sliding them onto the shaft (each gets its own side). Wire up the H-bridge and motor as in the previous lab, so that you can use your previously developed `setMotor(num,speed)` function. 
+
+5. Spin the motor at a slow speed with the disc in the slot to verify this works.
 
 <br>
-<img src="assets/hbridge_table.png" alt="h bridge truth table" width="400"/>
+<video src="assets/tslot_video.mp4" width="400" controls >
+</video>
+
+### Step 3: Converting Pulses to RPM
+1. Change your code so that it keeps track of the number of number of "pulses" measured by the t-slot interrupter (i.e., track high-to-low transitions of the digital input). Note that your processor is much faster than the wheel. If you add a "pulse" *every* time the `encoder.value` is `True`, then you will end up double-counting (actually, probably 1000x) counting every slot. 
+
+2. Convert this number to pulses-per-second, with a user-specified integration time. For example, you could set up a variable `PULSE_CALC_TIME = 0.1`, then check `time.monotonic()` and compute a new `pps` (pulse-per-second) by dividing `pulses` by `PULSE_CALC_TIME`. Don't forget you will need to reset your pulse count and your timer, so that this is correctly computed every `PULSE_CALC_TIME` period. Hint: if you use a time.sleep when printing or plotting this `pps` value, YOU WILL MISS PULSES. Instead, use *another* task timer based on checking `time.monotonic()`. 
+
+3. Your slotted disc should have 20 slots. Verify that this is true. We need to convert `pps` to `rpm`. This is simple math!
+
+4. Use the Mu [built-in plotter](https://codewith.mu/en/tutorials/1.2/plotter) to visualize your measured `rpm` at different commanded motor speeds (i.e., different 0-100 values). Choose a defined run time (e.g., 3 seconds). Note: you need to send a tuple, so use something like `print((rpm,0))`. Printing just `(rpm)` won't work. 
+
+5. This isn't the most friendly way to do post-processing on the collected data, and the necessary pause and time to print could mess up our results a bit. How about instead of printing the values as we go, we **save all of the collected RPMs into an array, including the timestamp they were collected at.** For example, you could make an array `rpms = []`, then use `rpms.append(rpm)` with your earlier code.
+
+6. It can still be very helpful to view the plot to get qualitative information. After the defined run time is over, write code which prints all the collected RPM values in the plotter format, so you can still look at them afterwards! 
+
+### Step 4: PID Controller
+1. Remember, the goal of feedback control is to minimize the error between the current process output and the desired setpoint. Our final architecture could take the form (roughly sketched):
+
+```python
+def setMotor(num, speed):
+    # Num is motor 'A' or motor 'B'
+    # Speed is an RPM value
+    if num == 'A':
+        motorA.duty_cycle = pid('A', speed, rpm)
+    ...
+
+def pid(num, setpoint, current):
+    kp = 0
+    kd = 0
+    ki = 0
+    feedforward = 40 #just an example to start
+    
+    error = setpoint - current
+
+    # Calculate the PID update, note that there are other variables you will need to keep track of for this!
+
+    # Proportional: kp * error
+    # Derivative: kd * (error - previous_error) / dt
+    # Integral: ki * integral_error
+
+    # A feedforward term will help us condition the output, which is especially important given our lack of direction measurement.
+    # With just proportional gain, it will look like:
+    update = feedforward + kp * error
+    return update
+```
+
+2. Let's first just use the proportional gain term. 
+
+A challenging part of PID tuning is always getting initial guesses for the gains. If you look above, I scaled the update to return in 2**16 precision from a calculation 0-100. Based on your experience in the past lab, let's do some rough guesswork for kp. Assume initially your motor is at rest and you command an RPM of 60. What will the error be? What would a reasonable duty cycle command be, to get the motor spinning? 
+
+3. Visualize the output of your proportional-only controller and do some tuning. **For this Step 4 section, don't worry TOO hard about tuning it perfectly; we will do more next step.** If done correctly, you should be able to get (qualitatively) stable oscillations around the setpoint, likely with significant overshoot. Instead 0 padding the tuple for plotting, use the current setpoint (e.g., `print((rpm,setpoint)))`
+
+4. Add in derivative gain `kd`. Tune the controller a bit and see what happens. If done correctly, you should be able to (qualitatively) significantly reduce the overshoot and "ringing" from your proportional-only results. You may see some steady state error, especially at low commanded RPMs.
+
+5. Add in integral gain `ki`. Tune the controller a bit to qualitatively remove any steady state error with this term. If your run time is appropriately short and your tuning has been okay until now, you shouldn't have to worry too much about windup.
+
+### Step 5: Quantitative Analysis and Tuning
+1. You should have been saving all your RPM values, with timestamps, to an array. I want you to calculate the following terms for each run:
+
+**Rise Time:** Time it takes to go from 10% to 90% of the final value.
+
+**Percent Overshoot:** Amount by which you overshoot the target setpoint. 
+
+**Settling Time:** Time it takes to reach steady state, here defined as oscillations below 10% of the final value. 
+
+**Steady State Error:** Difference between the final value and the target value. 
+
+Graphically:
+
 <br>
-<img src="assets/hbridge_diagram.png" alt="h bridge operation diagram" width="400"/>
+<img src="assets/pid_response_label.png" alt="pid response terms" width="400"/>
 
+2. Now sit and tune your controller to make it as close to ideal as possible, for the widest possible range of commanded RPM values. Good luck! Here are some resources to help:
 
-### Step 3: Basic Characterization
-1. Find the minimum pwm duty cycle which still turns your motor reliably. 
+<br>
+<img src="assets/pid_compensation_animated.gif" alt="pid compensation" width="400"/>
+<br>
+<img src="assets/pid_parameter_table.png" alt="pid parameter table" width="400/>
 
-2. Explore how altering the pwm frequency changes this minimum pwm duty cycle. Record some values, and any other observations about what changes at different pwm frequencies.
+<br>
+<br>
+Here is one of my best results during tuning, which reached a steady state value within 10% (75) of the setpoint of 80...
+<br>
+<img src="assets/dsd_output.png" alt="reasonable finish" width="400"/>
 
-3. Do some external research to supplement your investigation of pwm frequency for h bridges, so that you are able to respond to questions Dr. Drew asks you when he checks off your lab. 
-
-4. Here's a trick to work around this limitation. First, see what happens when you set a high duty cycle, THEN drop to this low level where it doesn't moving. Note: you still almost certainly won't be able to reach duty cycles below 10%.
-
-5. Add code into your setMotor function that "kickstarts" the motor by sending a higher duty cycle command *very* briefly, before sending the desired low duty cycle. Tune this to simultaneously minimize the kickstart duration and maximize the usable duty cycle range.
-
-### Step 4: Sensorimotor Loops: choose ONE of these:
-- Connect your Accelerometer breakout board. Write a program that turns the pitch of your breadboard into forward/backward motor motion. Add a button that can serve as an "emergency stop" for the motor. 
-
-- Connect your potentiometer. Set it up so that a single full turn of your potentiometer corresponds to a full -100 to 100 speed setting (i.e, full ccw and cw range) for your motor. Add a button that can serve as an "emergency stop" for the motor. 
-
-- **Hint for both:** When you are continuously checking an input to change the motor duty cycle, the "kickstart" code you wrote above will cause undesirable behavior. You need to add more logic to check whether you actually need the kickstart. I will be checking your lab for smooth operation at low duty cycles. 
-
+3. You may find yourself thinking what the heck, this works pretty well without ANY feedback control (i.e., just the feedforward term), why am I bothering with this PID controller, which is a huge pain in the butt to tune. That's because you are just doing static testing! What if you changed the motor voltage (e.g., drained your robot's battery)? Added a load (therefore requiring more torque)? Drove up a hill? 

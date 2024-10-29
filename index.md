@@ -50,5 +50,5 @@ Note that this is a **live site**; I will be adding Readings and Labs module blo
 |[8. Sensor and Actuator Integration: The Powerglove](labs/lab8/lab8.md)             | 10/7, 10/9 |
 |[9. Exploring Other Actuators: Piezo Piano](labs/lab9/lab9.md)                      | 10/14, 10/16|
 |[10. DC Motor Driver Circuits: The H Bridge](labs/lab10/lab10.md)                   | 10/21, 10/23|
-<!--|[11: Feedback Control: DC Motor PID](labs/lab11/lab11.md)                           | 10/28, 10/30| -->
+|[11: Feedback Control: DC Motor PID](labs/lab11/lab11.md)                           | 10/28, 10/30| 
 
