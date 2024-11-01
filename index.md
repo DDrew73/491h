@@ -34,6 +34,8 @@ Note that this is a **live site**; I will be adding Readings and Labs module blo
 |[17. Encoders](readings/reading17/reading17.md)                                     | 10/23 |
 |[18. Feedback Control Overview](readings/reading18/reading18.md)                    | 10/28 |
 |[19. PID Controllers](readings/reading19/reading19.md)                              | 10/30 |
+|[20. Noise and Filters](readings/reading20/reading20.md)                            | 11/04 |
+|[21. The Fast Fourier Transform](readings/reading21/reading21.md)                   | 11/06 |
 
 
 ## Labs

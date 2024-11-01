@@ -122,7 +122,9 @@ Graphically:
 2. Now sit and tune your controller to make it as close to ideal as possible, for the widest possible range of commanded RPM values. Good luck! Here are some resources to help:
 
 <br>
-<img src="assets/pid_compensation_animated.gif" alt="pid compensation" width="400"/>
+<img src="assets/pid_compensation_animated.gif" alt="pid compensation" width="400">
+</img>
+<br>
 <br>
 <img src="assets/pid_parameter_table.png" alt="pid parameter table" width="400/>
 
