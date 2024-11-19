@@ -125,6 +125,7 @@ Your best source of information will be [the product documentation page on Polol
 ## Rubric and Grading
 
 ### Rubric
+
 | **Category**       | **Points**         |       |       |
 |---------------------|--------------------|-------|-------|
 |                     | **1 Point**       | **2 Points** | **3 Points** |
@@ -167,6 +168,7 @@ Your grade follows directly from points on the rubric.
 
 
 ### Suggested Work Split Part 1: Subsystem Focus
+
 | **Task**                                |
 |-----------------------------------------|
 | Reflectance Array subsystem testing     |
@@ -174,6 +176,7 @@ Your grade follows directly from points on the rubric.
 | Wiring and code architecture, pushbutton|
 
 ### Suggested Work Split Part 2: Skills Focus
+
 | **Task**                 |
 |--------------------------|
 | Serpentine                |
