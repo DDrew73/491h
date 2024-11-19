@@ -53,5 +53,11 @@ Note that this is a **live site**; I will be adding Readings and Labs module blo
 |[9. Exploring Other Actuators: Piezo Piano](labs/lab9/lab9.md)                      | 10/14, 10/16|
 |[10. DC Motor Driver Circuits: The H Bridge](labs/lab10/lab10.md)                   | 10/21, 10/23|
 |[11: Feedback Control: DC Motor PID](labs/lab11/lab11.md)                           | 10/28, 10/30| 
-|[12. Digital Signal Processing: Audio Filtering and FFT](labs/lab12/lab12.md)       | 11/04. 11/06|
+|[12. Digital Signal Processing: Audio Filtering and FFT](labs/lab12/lab12.md)       | 11/04, 11/06|
+
+## Project
+
+|              Topic                                                                 | Date |
+| :-------                                                                           |:----:|
+|[Project Documentation](project/project.md)                                        |11/18 - 12/9 |      
 
