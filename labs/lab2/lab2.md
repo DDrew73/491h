@@ -27,7 +27,7 @@ This lab will be your first chance to really exercise the Circuitpython interfac
 2. Open Mu. If you have any problems detecting your board, return to Lab 1!
 
 ### Step 2: Playing with REPL
-1. Before we can interact with the onboard RGB LED, we need to figure out what pin names to use. Connect to the REPL interface by clicking the *Serial* button and pressing enter.
+1. Before we can interact with the onboard RGB LED, we need to figure out what pin names to use. Connect to the REPL interface by clicking the *Serial* button (or using the Circuitpython VS Code extension) and pressing enter / CTRL-C. 
 
 2. We can find all the valid pin names in the `board` module. Remember, this is Python, so we start by typing `import board`. 
 
@@ -35,7 +35,7 @@ This lab will be your first chance to really exercise the Circuitpython interfac
 
 4. You can also copy and paste more than one line of code at a time into your REPL interface for testing. We are going to use the `digitalio` module built into Circuitpython to toggle our LED. What do you need to do before you'll be able to use `digitalio`?
 
-5. Let's turn the red LED on. Copy the code below into your REPL interface:
+5. Let's turn the red LED on. Copy the code below into your REPL interface. For those of you familiar with traditional Arduino programming, this is logically equivallent to declaring a pinMode. 
     ```python
     led_red = digitalio.DigitalInOut(board.LED_R)
     led_red.direction = digitalio.Direction.OUTPUT
@@ -44,9 +44,9 @@ This lab will be your first chance to really exercise the Circuitpython interfac
 6. You can turn the LED on and off using `led_red.value=1` and `led_red.value=0`. <u>Which one turns the LED on, and which one turns the LED off?</u>
 
 ### Step 3: Writing Python code that lives on your Nano
-1.  Your Mu editor automatically opens the `code.py` file which lives on your Nano. This is the code that will *automatically execute* whenever your board is powered on (or the reset button is pressed). If you want to change the code on the board, you can either drag a new `code.py` file to the CIRCUITPY drive, or simply edit this file in Mu and click Save.
+1.  Your Mu editor automatically opens the `code.py` file which lives on your Nano. In VS Code, you open it manually. This is the code that will *automatically execute* whenever your board is powered on (or the reset button is pressed). If you want to change the code on the board, you can either drag a new `code.py` file to the CIRCUITPY drive, or simply edit this file in your IDE and click Save.
 
-2. Try opening the Serial interface in Mu, then pressing CTRL-D to reload. You should see `Hello World!` assuming you haven't messed with your `code.py` yet. Try editing the string that gets printed, pressing Save, then reloading. Hopefully you see the changes reflected.
+2. Try opening the Serial interface in Mu, then pressing CTRL-D to reload. You should see `Hello World!` or the other simple script we wrote in Lab 1, assuming you haven't messed with your `code.py` yet. Try editing the string that gets printed, pressing Save, then reloading. Hopefully you see the changes reflected. This should be a review of Lab 1, but repetition is good for your brain!
 
 3. Using the code skeleton provided below, you are now on your own to complete the lab. Check what you need to accomplish in the **Deliverables** section above. If you have time, try the **Extensions**. 
 
@@ -63,6 +63,7 @@ This lab will be your first chance to really exercise the Circuitpython interfac
     led_green.direction = digitalio.Direction.OUTPUT
     
     #led_blue setup goes here
+    #second line of led_blue setup goes here
   
     # Initialize all LEDs to OFF
     led_red.value = 1
@@ -87,32 +88,4 @@ This lab will be your first chance to really exercise the Circuitpython interfac
 
 4. If we overwrite the `code.py` file later, this code will all disappear. That would be a shame! We might want to build on this foundation later. Go ahead and use your chosen Python IDE to create and save a `lab2.py` file with this completed code into the directory you created back in Lab 1. 
 
-<style>
-.copy-button {
-  float: right;
-  margin-top: 4px;
-  font-size: 0.8rem;
-  padding: 2px 6px;
-  cursor: pointer;
-}
-</style>
-
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-  document.querySelectorAll("pre > code").forEach(function (codeBlock) {
-    const button = document.createElement("button");
-    button.innerText = "Copy";
-    button.className = "copy-button";
-
-    const pre = codeBlock.parentNode;
-    pre.parentNode.insertBefore(button, pre);
-
-    button.addEventListener("click", () => {
-      navigator.clipboard.writeText(codeBlock.innerText).then(function () {
-        button.innerText = "Copied!";
-        setTimeout(() => (button.innerText = "Copy"), 2000);
-      });
-    });
-  });
-});
-</script>
+{% include copy_clipboard.html %}

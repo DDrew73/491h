@@ -93,3 +93,5 @@ Use these coefficients to calculate estimated resistance for some test points; y
 1. Find a partner and turn this into a two player game using their FSR. What code can you reuse? What functions would have made your life easier when extending this game to a second player? 
 
 2. Complete the lab Deliverable. 
+
+{% include copy_clipboard.html %}

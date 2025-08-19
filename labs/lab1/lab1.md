@@ -74,3 +74,5 @@ and will be helpful when you want to refer back to old code! I suggest that you 
 ## Helpful Additional References
 - [The Official Arduino Nano ESP32 "Cheat Sheet"](https://docs.arduino.cc/tutorials/nano-esp32/cheat-sheet/)
 - [Adafruit's CircuitPython startup guide](https://learn.adafruit.com/welcome-to-circuitpython/overview)
+
+{% include copy_clipboard.html %}

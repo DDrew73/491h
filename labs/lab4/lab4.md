@@ -114,3 +114,5 @@ define functions
 if __name__ == '__main__':
     main()
 ```
+
+{% include copy_clipboard.html %}

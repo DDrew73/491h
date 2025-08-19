@@ -1,0 +1,29 @@
+<style>
+.copy-button {
+  float: right;
+  margin-top: 4px;
+  font-size: 0.8rem;
+  padding: 2px 6px;
+  cursor: pointer;
+}
+</style>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  document.querySelectorAll("pre > code").forEach(function (codeBlock) {
+    const button = document.createElement("button");
+    button.innerText = "Copy";
+    button.className = "copy-button";
+
+    const pre = codeBlock.parentNode;
+    pre.parentNode.insertBefore(button, pre);
+
+    button.addEventListener("click", () => {
+      navigator.clipboard.writeText(codeBlock.innerText).then(function () {
+        button.innerText = "Copied!";
+        setTimeout(() => (button.innerText = "Copy"), 2000);
+      });
+    });
+  });
+});
+</script>

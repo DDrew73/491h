@@ -92,3 +92,5 @@
     ```
 
 3. If we overwrite the `code.py` file later, this code will all disappear. That would be a shame! We might want to build on this foundation later. Go ahead and use your chosen Python IDE to create and save a `lab3.py` file with this completed code into the directory you created back in Lab 1. 
+
+{% include copy_clipboard.html %}
