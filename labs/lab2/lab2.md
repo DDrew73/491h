@@ -86,3 +86,33 @@ This lab will be your first chance to really exercise the Circuitpython interfac
     ```
 
 4. If we overwrite the `code.py` file later, this code will all disappear. That would be a shame! We might want to build on this foundation later. Go ahead and use your chosen Python IDE to create and save a `lab2.py` file with this completed code into the directory you created back in Lab 1. 
+
+<style>
+.copy-button {
+  float: right;
+  margin-top: 4px;
+  font-size: 0.8rem;
+  padding: 2px 6px;
+  cursor: pointer;
+}
+</style>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  document.querySelectorAll("pre > code").forEach(function (codeBlock) {
+    const button = document.createElement("button");
+    button.innerText = "Copy";
+    button.className = "copy-button";
+
+    const pre = codeBlock.parentNode;
+    pre.parentNode.insertBefore(button, pre);
+
+    button.addEventListener("click", () => {
+      navigator.clipboard.writeText(codeBlock.innerText).then(function () {
+        button.innerText = "Copied!";
+        setTimeout(() => (button.innerText = "Copy"), 2000);
+      });
+    });
+  });
+});
+</script>

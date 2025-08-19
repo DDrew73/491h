@@ -19,42 +19,44 @@ In this first lab, you will be setting up the microcontroller toolchain which yo
 
 ## Instructions
 
-### Step 1: Download Items
+### Step 1: Get familiar with your kit. 
+1. Receive a hardware kit from Dr. Drew, and make sure he writes down the kit number you received. 
+
+2. Look at each component in the box and consider them. Do you know what it is already? Have you ever used one before?
+
+### Step 2: Download Items
 1. Download the Mu editor from [https://codewith.mu/en/download](https://codewith.mu/en/download).
 
-2. Download the Circuitpython .bin file from [https://circuitpython.org/board/arduino_nano_esp32s3/](https://circuitpython.org/board/arduino_nano_esp32s3/) to your computer. Make sure you know where this file lives!
+2. Download Visual Studio Code ("VS Code") to use as your primary Python editor from [https://code.visualstudio.com/](https://code.visualstudio.com/). If you already have a favorite Python IDE, feel free to use that instead.
 
-3. (Optional) Download Visual Studio Code ("VS Code") to use as your primary Python editor from [https://code.visualstudio.com/](https://code.visualstudio.com/). If you already have a favorite Python IDE, feel free to use that.
-
-### Step 2: Load Circuitpython onto your Microcontroller
+### Step 3: Check out Circuitpython
 1. Plug your Arduino Nano ESP32 into your laptop.
 
-2. Enter bootloader mode on your Nano by shorting pins B1 and GND. The status LED towards the center of the Nano should turn Green. Once it does, press the reset button. The pin names are written on your microcontroller. Here is a pinout diagram for additional reference:\
-<img src="../../assets/images/esp-pinout.png" alt="ESP32 Pinout" width="250"/>
+2. A drive named "CIRCUITPY" should show up in your connected drives list. Open Mu, select *CircuitPython* from the list, and make sure it detects the board (no error thrown).
 
-3. **Using Chrome as your browser**, go to the Adafruit ESPTool here [https://adafruit.github.io/Adafruit_WebSerial_ESPTool/}](https://adafruit.github.io/Adafruit_WebSerial_ESPTool/). If you don't have or use Chrome, then you can either download it [here](https://www.google.com/chrome/) or use a friend's computer after they are done; no worries. 
-
-4. Click "Connect" in the top right corner. Choose the "USB JTAG/serial debug unit" serial port, then press Connect again. Your screen should now look like this:\
-<img src="assets/esptool.png" alt="ESPTool Screen" width="400"/>
-
-5. Click Erase and wait for the prompt to display finished.
-
-6. Click the top *Choose a file...* button, then navigate to and select the *adafruit-circuitpython-arduino_nano_esp32s3-en_US-9.1.1.bin* file you downloaded earlier. Click *Program*
-
-7. When finished, the prompt should say "To run the new firmware, please reset your device.". Remove the B1 and GND jumper wire, then reset the board using the button. 
-
-8. A drive named "CIRCUITPY" should show up in your connected drives list. Open Mu, select *CircuitPython* from the list, and make sure it detects the board (no error thrown).
-
-9. Click the *Serial* button at the top, then press enter. You should be in the Circuitpython REPL interface:
+3. Click the *Serial* button at the top, then press enter. You should be in the Circuitpython REPL interface:
 ```
-Adafruit CircuitPython 9.1.1 on 2024-07-22; Arduino Nano ESP32 with ESP32S3
+Adafruit CircuitPython 9.2.8 on 2025-08-25; Arduino Nano ESP32 with ESP32S3
 >>> 
 ```
 
-Try writing some Python code; `print("Hello world!")` is a good start.
+4. Try writing some Python code; `print("Hello world!")` is a good start. Once you understand how this works, press CTRL+D to exit the REPL interface.
 
+5. Let's switch to using a (better) development environment, like VS Code. Keep your Mu window open. Open VS Code, then open the code.py file in the CIRCUITPY drive. 
 
-### Step 3: Get Organized
+6. Try pasting this code and then **saving the file**:
+```python
+print("This is a simple Python script.")
+for i in range(5):
+    print(f"Iteration {i + 1}")
+print("End of script.")
+```
+
+7. Pull up your Mu window and verify that the expected serial output has arrived. Whenever you save new code, it automatically restarts your microcontroller and executes. Nifty!
+
+8. It would be annoying to switch back and forth between Mu and VS Code every time you want to see output. Let's get a plugin for VS Code which lets us see the output directly there. Follow the [instructions here](https://learn.adafruit.com/using-the-circuitpython-extension-for-visual-studio-code/install-the-circuitpython-extension-for-vs-code) to install the Circuitpython extension for VS Code. Verify it works after!
+
+### Step 4: Get Organized
 1. Create a directory on your file system to use for this class. This will eventually look something like this:
 ```
 >ece491h
@@ -65,7 +67,9 @@ Try writing some Python code; `print("Hello world!")` is a good start.
 >         lab3.py
 >         -....
 ```
-and will be helpful when you want to refer back to old code! I suggest that you *write down the answers to questions which I have underlined in the Lab writeups in a text file.* They will be used in your lab quizzes.
+and will be helpful when you want to refer back to old code! I suggest that you *write down the answers to questions which I have underlined in the Lab writeups in a text file, or in a notebook.* They will be used in your lab quizzes.
+
+2. Whenever you finish a lab, copy the code to your new folder (from the CIRCUITPY drive). Practice doing that now with your Lab 1 code.
 
 ## Helpful Additional References
 - [The Official Arduino Nano ESP32 "Cheat Sheet"](https://docs.arduino.cc/tutorials/nano-esp32/cheat-sheet/)

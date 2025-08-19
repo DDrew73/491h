@@ -109,6 +109,10 @@ Your best source of information will be [the product documentation page on Polol
 <br>
 <img src="assets/GluedPillar.jpg" alt="Glued Pillar" width="400"/>
 
+### Pushbutton
+You should be able to start and stop your robot using a pushbutton on the breadboard. 
+
+
 ### Notes
 
 **Power:** Make sure to connect the **GND** of the power distribution board to the **GND** of your Arduino. Until you are ready to start actually running the course, you can keep the USB connection to your computer; just *don't* plug in the power distribution board as a voltage source to your Arduino while doing so. 

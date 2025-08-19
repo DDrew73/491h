@@ -2,7 +2,7 @@
 
 ## Analog-to-Digital Conversion
 
-This reading assignment is intended to serve as an introduction to one of the most important peripherals in robotics and cyberphysical systems contexts, the analog-to-digital converter. Although hopefully the reading on voltage dividers is review, this is a critical circuit topology that is worth memorizing.
+This reading assignment is intended to serve as an introduction to one of the most important peripherals in robotics and cyberphysical systems contexts, the analog-to-digital converter. Although hopefully the reading on voltage dividers should be strictly a review of things you have already learned, this is a critical circuit topology that is worth memorizing.
 
 **Reading Material:**
 - [Art of Electronics - Conversion](assets/ArtOfElectronics_Conversion.pdf) (~3 pages)

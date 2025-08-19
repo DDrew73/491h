@@ -11,7 +11,6 @@ The advent of cheap, capable, and highly miniaturized computers has revolutioniz
 - [Practical Electronics for Inventors - Microcontrollers](assets/PracticalElectronics_Microcontrollers.pdf) (~3 pages)
 - [Art of Electronics - Micocontrollers](assets/ArtOfElectronics_Microcontrollers.pdf) (~3 pages)
 - [Practical Electronics for Inventors - Digital Logic](assets/PracticalElectronics_Digital.pdf) (~3 pages)
-- [Art of Electronics - Digital Logic](assets/ArtOfElectronics_Digital.pdf) (~3 pages)
 
 
 **Learning Outcomes:**
