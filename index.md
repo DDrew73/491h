@@ -39,6 +39,7 @@ Note that this is a **live site**; I will be adding Readings and Labs module blo
 |[21. The Fast Fourier Transform](readings/reading21/reading21.md)                   | 11/05 |
 {% endcomment %}
 
+
 ## Labs
 
 |              Topic                                                                 | Date |
@@ -57,6 +58,7 @@ Note that this is a **live site**; I will be adding Readings and Labs module blo
 |[11: Feedback Control: DC Motor PID](labs/lab11/lab11.md)                           | 10/28, 10/30| 
 |[12. Digital Signal Processing: Audio Filtering and FFT](labs/lab12/lab12.md)       | 11/04, 11/06|
 {% endcomment %}}
+
 
 <!--
 ## Project
