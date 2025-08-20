@@ -11,7 +11,6 @@ For more information, please see [the course syllabus](readings/reading1/syllabu
 
 Note that this is a **live site**; I will be adding Readings and Labs module blocks, and enabling links within modules, as we go through the course. This helps me adjust pacing and content to better fit our progress.
 
-
 ## Readings
 
 |              Topic                                                                 | Date |
@@ -21,7 +20,24 @@ Note that this is a **live site**; I will be adding Readings and Labs module blo
 |[3. Microcontrollers and Digital Logic](readings/reading3/reading3.md)              | 9/03 |
 |[4. Analog-to-Digital Conversion](readings/reading4/reading4.md)                    | 9/08 |
 |[5. Pulse Width Modulation](readings/reading5/reading5.md)                          | 9/10 |
-{% comment %}
+
+## Labs
+
+|              Topic                                                                 | Date |
+| :-------                                                                           |:----:|
+|[1. Installing Circuitpython](labs/lab1/lab1.md)                                    | 8/25 |
+|[2. RGB LED Intro](labs/lab2/lab2.md)                                               | 8/27 |
+
+<!--
+## Readings
+
+|              Topic                                                                 | Date |
+| :-------                                                                           |:----:|
+|[1. Course Syllabus](readings/reading1/syllabus.md)                                 | 8/25 |
+|[2. Past, Present, and Future of Robotics](readings/reading2/reading2.md)           | 8/27 |
+|[3. Microcontrollers and Digital Logic](readings/reading3/reading3.md)              | 9/03 |
+|[4. Analog-to-Digital Conversion](readings/reading4/reading4.md)                    | 9/08 |
+|[5. Pulse Width Modulation](readings/reading5/reading5.md)                          | 9/10 |
 |[6. Transduction Principles](readings/reading6/reading6.md)                         | 9/15 |
 |[7. Sensor Readout Circuits](readings/reading7/reading7.md)                         | 9/17 |   
 |[8. MEMS Sensors](readings/reading8/reading8.md)                                    | 9/22 |  
@@ -38,8 +54,6 @@ Note that this is a **live site**; I will be adding Readings and Labs module blo
 |[19. PID Controllers](readings/reading19/reading19.md)                              | 10/29 |
 |[20. Noise and Filters](readings/reading20/reading20.md)                            | 11/03 |
 |[21. The Fast Fourier Transform](readings/reading21/reading21.md)                   | 11/05 |
-{% endcomment %}
-
 
 ## Labs
 
@@ -49,7 +63,6 @@ Note that this is a **live site**; I will be adding Readings and Labs module blo
 |[2. RGB LED Intro](labs/lab2/lab2.md)                                               | 8/27 |
 |[3. Digital Inputs and Outputs](labs/lab3/lab3.md)                                  | 9/03 |
 |[4. Analog Inputs and Outputs: LED DJ Board](labs/lab4/lab4.md)                     | 9/08, 9/10 | 
-{% comment %}
 |[5. Variable Resistance Sensors: Thumb War](labs/lab5/lab5.md)                      | 9/16, 9/18 |
 |[6. Complex Peripherals: Accelerometer Inclination](labs/lab6/lab6.md)              | 9/23, 9/25 |
 |[7. Sensor Characterization: Ultrasonic Obstacle Detector](labs/lab7/lab7.md)       | 9/30, 10/02 |
@@ -58,11 +71,9 @@ Note that this is a **live site**; I will be adding Readings and Labs module blo
 |[10. DC Motor Driver Circuits: The H Bridge](labs/lab10/lab10.md)                   | 10/21, 10/23 |
 |[11. Feedback Control: DC Motor PID](labs/lab11/lab11.md)                           | 10/28, 10/30 | 
 |[12. Digital Signal Processing: Audio Filtering and FFT](labs/lab12/lab12.md)       | 11/04, 11/06 |
-{% endcomment %}
 
-
-<!--
 ## Project
+
 |              Topic                                                                 | Date |
 | :-------                                                                           |:----:|
 |[Project Documentation](project/project.md)                                        |11/18 - 12/9 |      
