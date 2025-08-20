@@ -11,6 +11,7 @@ For more information, please see [the course syllabus](readings/reading1/syllabu
 
 Note that this is a **live site**; I will be adding Readings and Labs module blocks, and enabling links within modules, as we go through the course. This helps me adjust pacing and content to better fit our progress.
 
+
 ## Readings
 
 |              Topic                                                                 | Date |
@@ -53,11 +54,11 @@ Note that this is a **live site**; I will be adding Readings and Labs module blo
 |[6. Complex Peripherals: Accelerometer Inclination](labs/lab6/lab6.md)              | 9/23, 9/25 |
 |[7. Sensor Characterization: Ultrasonic Obstacle Detector](labs/lab7/lab7.md)       | 9/30, 10/02 |
 |[8. Sensor and Actuator Integration: The Powerglove](labs/lab8/lab8.md)             | 10/07, 10/09 |
-|[9. Exploring Other Actuators: Piezo Piano](labs/lab9/lab9.md)                      | 10/14, 10/16|
-|[10. DC Motor Driver Circuits: The H Bridge](labs/lab10/lab10.md)                   | 10/21, 10/23|
-|[11: Feedback Control: DC Motor PID](labs/lab11/lab11.md)                           | 10/28, 10/30| 
-|[12. Digital Signal Processing: Audio Filtering and FFT](labs/lab12/lab12.md)       | 11/04, 11/06|
-{% endcomment %}}
+|[9. Exploring Other Actuators: Piezo Piano](labs/lab9/lab9.md)                      | 10/14, 10/16 |
+|[10. DC Motor Driver Circuits: The H Bridge](labs/lab10/lab10.md)                   | 10/21, 10/23 |
+|[11. Feedback Control: DC Motor PID](labs/lab11/lab11.md)                           | 10/28, 10/30 | 
+|[12. Digital Signal Processing: Audio Filtering and FFT](labs/lab12/lab12.md)       | 11/04, 11/06 |
+{% endcomment %}
 
 
 <!--
