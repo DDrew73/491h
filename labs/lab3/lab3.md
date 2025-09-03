@@ -19,14 +19,15 @@
 - For 3 seconds, toggle the RED LED on and off with a button press. Then for 3 seconds, the GREEN LED turns on when the button is held, and off when not held. Repeat this cycle indefinitely. 
 
 ## Extensions
-- Switch modes at any time by "double clicking" the button.
+- Switch modes at any time by "double clicking" the button instead of relying on a timer.
+- Create a "Simon Says" game where the user has to copy the pattern of a flashing LED with their button presses.
 
 ## Instructions
 
 ### Step 1: Get Started
 1. Connect your Arduino Nano ESP32 to your computer.
 
-2. Open Mu. If you have any problems detecting your board, return to Lab 1!
+2. Open Mu/VSCode. If you have any problems detecting your board, return to Lab 1!
 
 3. Insert the button into your beadboard. It should nicely straddle the center divider. 
 

@@ -27,6 +27,7 @@ Note that this is a **live site**; I will be adding Readings and Labs module blo
 | :-------                                                                           |:----:|
 |[1. Installing Circuitpython](labs/lab1/lab1.md)                                    | 8/25 |
 |[2. RGB LED Intro](labs/lab2/lab2.md)                                               | 8/27 |
+|[3. Digital Inputs and Outputs](labs/lab3/lab3.md)                                  | 9/03 |
 
 <!--
 ## Readings
