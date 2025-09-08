@@ -27,12 +27,12 @@ This lab will serve as a basic introduction to one of the most important functio
 - Add a mode selection feature so that the potentiometer can also control the speed of the LED blinking and/or the color of the LED. 
 
 ## Instructions
-I think that this will be a challenging exercise in coding for many of you. Remember that Python list comprehension (e.g., `rgb = [120,0,0]` `rgb[0] = 120`) works here. A common strategy when debugging interactive code like this is to use `print()` statements liberally to figure out what the heck is going on when things aren't working well!
+I think that this will be a challenging exercise in coding for some of you. Remember that Python list comprehension (e.g., `rgb = [120,0,0]` `rgb[0] = 120`) works here. A common strategy when debugging interactive code like this is to use `print()` statements liberally to figure out what the heck is going on when things aren't working well!
 
 ### Step 1: Get Started
 1. Connect your Arduino Nano ESP32 to your computer.
 
-2. Open Mu. If you have any problems detecting your board, return to Lab 1!
+2. Open Mu/VSCode. If you have any problems detecting your board, return to Lab 1!
 
 3. Use both of your 10k resistors to construct a voltage divider with the input from the 3.3V pin of your Nano and the output attached to A1. Don't forget to ground the bottom!
 
