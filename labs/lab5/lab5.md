@@ -29,7 +29,7 @@ Many transducers/sensors convert incoming stimulus into a change in their resist
 ### Step 1: Get Started
 1. Connect your Arduino Nano ESP32 to your computer.
 
-2. Open Mu. If you have any problems detecting your board, return to Lab 1!
+2. Open Mu/VSCode. If you have any problems detecting your board, return to Lab 1!
 
 ### Step 2: Getting Force From Your FSR
 1. Set up a voltage divider with a 10K resistor and your FSR. I set up the divider with the FSR on "bottom" as R2.

@@ -20,6 +20,8 @@ Note that this is a **live site**; I will be adding Readings and Labs module blo
 |[3. Microcontrollers and Digital Logic](readings/reading3/reading3.md)              | 9/03 |
 |[4. Analog-to-Digital Conversion](readings/reading4/reading4.md)                    | 9/08 |
 |[5. Pulse Width Modulation](readings/reading5/reading5.md)                          | 9/10 |
+|[6. Transduction Principles](readings/reading6/reading6.md)                         | 9/15 |
+|[7. Sensor Readout Circuits](readings/reading7/reading7.md)                         | 9/17 |   
 
 ## Labs
 
@@ -29,6 +31,7 @@ Note that this is a **live site**; I will be adding Readings and Labs module blo
 |[2. RGB LED Intro](labs/lab2/lab2.md)                                               | 8/27 |
 |[3. Digital Inputs and Outputs](labs/lab3/lab3.md)                                  | 9/03 |
 |[4. Analog Inputs and Outputs: LED DJ Board](labs/lab4/lab4.md)                     | 9/08, 9/10 | 
+|[5. Variable Resistance Sensors: Thumb War](labs/lab5/lab5.md)                      | 9/16, 9/18 |
 
 <!--
 ## Readings
