@@ -31,7 +31,7 @@ Note that this is a **live site**; I will be adding Readings and Labs module blo
 |[2. RGB LED Intro](labs/lab2/lab2.md)                                               | 8/27 |
 |[3. Digital Inputs and Outputs](labs/lab3/lab3.md)                                  | 9/03 |
 |[4. Analog Inputs and Outputs: LED DJ Board](labs/lab4/lab4.md)                     | 9/08, 9/10 | 
-|[5. Variable Resistance Sensors: Thumb War](labs/lab5/lab5.md)                      | 9/16, 9/18 |
+|[5. Variable Resistance Sensors: Thumb War](labs/lab5/lab5.md)                      | 9/15, 9/17 |
 
 <!--
 ## Readings
