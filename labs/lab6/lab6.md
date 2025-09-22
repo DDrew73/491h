@@ -22,7 +22,6 @@ Tilt detection using an IMU (inertial measurement unit) is critical to a huge nu
 
 ## Extensions
 - Make it so that your virtual "ball" can jump over walls if you press a button.
-- Add a moving obstacle (a "monster") which the player cannot touch.
 - Procedurally generate new mazes without having to specify them beforehand. 
 
 ## Instructions
