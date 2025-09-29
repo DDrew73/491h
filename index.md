@@ -24,6 +24,8 @@ Note that this is a **live site**; I will be adding Readings and Labs module blo
 |[7. Sensor Readout Circuits](readings/reading7/reading7.md)                         | 9/17 |   
 |[8. MEMS Sensors](readings/reading8/reading8.md)                                    | 9/22 |  
 |[9. Digital Communication Protocols](readings/reading9/reading9.md)                 | 9/24 | 
+|[10. Distance Sensors](readings/reading10/reading10.md)                             | 9/29 | 
+|[11. Simultaneous Localization and Mapping (SLAM)](readings/reading11/reading11.md) | 10/01 |
 
 ## Labs
 
@@ -34,7 +36,8 @@ Note that this is a **live site**; I will be adding Readings and Labs module blo
 |[3. Digital Inputs and Outputs](labs/lab3/lab3.md)                                  | 9/03 |
 |[4. Analog Inputs and Outputs: LED DJ Board](labs/lab4/lab4.md)                     | 9/08, 9/10 | 
 |[5. Variable Resistance Sensors: Thumb War](labs/lab5/lab5.md)                      | 9/15, 9/17 |
-|[6. Complex Peripherals: Accelerometer Inclination](labs/lab6/lab6.md)              | 9/23, 9/25 |
+|[6. Complex Peripherals: Accelerometer Inclination](labs/lab6/lab6.md)              | 9/22, 9/24 |
+|[7. Sensor Characterization: Ultrasonic Obstacle Detector](labs/lab7/lab7.md)       | 9/30, 10/01 |
 
 <!--
 ## Readings
