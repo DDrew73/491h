@@ -2,7 +2,7 @@
 
 ## Distance Sensors
 
-In increasingly interconnected systems which must traffic data between multiple on-board processors and sensors, and even services in the cloud, robust digital communication protocols are vital -- consider the world-changing power of WiFi, and the buzz of 5G technology. But there is a core of more fundamental, low-level protocols which underpin many systems. These slower, simpler protocols are extremely common for IOT devices and microcontroller-based subcomponents of larger cyberphysical systems.
+By measuring range to obstacles and surfaces, distance sensors enable safe navigation, collision avoidance, mapping (SLAM), and precise manipulation and docking. In control loops, continuous distance feedback lets systems maintain standoff, follow contours, and enforce safety margins under uncertainty. Different modalities, like LiDAR, ultrasonic, stereo/structured light, and radar, offer complementary ranges, resolutions, and robustness, which can be fused to improve reliability across environments.
 
 **Reading Material:**
 - [Distance Sensor Types and Selection Guide](assets/DistanceSensors_Seeed.pdf) ~10 pages w/ images
