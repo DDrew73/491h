@@ -26,6 +26,8 @@ Note that this is a **live site**; I will be adding Readings and Labs module blo
 |[9. Digital Communication Protocols](readings/reading9/reading9.md)                 | 9/24 | 
 |[10. Distance Sensors](readings/reading10/reading10.md)                             | 9/29 | 
 |[11. Simultaneous Localization and Mapping (SLAM)](readings/reading11/reading11.md) | 10/01 |
+|[12. DC Motors](readings/reading12/reading12.md)                                    | 10/06 |
+|[13. Servo Motors](readings/reading13/reading13.md)                                 | 10/08 |
 
 ## Labs
 
@@ -38,6 +40,7 @@ Note that this is a **live site**; I will be adding Readings and Labs module blo
 |[5. Variable Resistance Sensors: Thumb War](labs/lab5/lab5.md)                      | 9/15, 9/17 |
 |[6. Complex Peripherals: Accelerometer Inclination](labs/lab6/lab6.md)              | 9/22, 9/24 |
 |[7. Sensor Characterization: Ultrasonic Obstacle Detector](labs/lab7/lab7.md)       | 9/30, 10/01 |
+|[8. Sensor and Actuator Integration: The Powerglove](labs/lab8/lab8.md)             | 10/06, 10/08 |
 
 <!--
 ## Readings
