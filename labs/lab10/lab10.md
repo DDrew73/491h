@@ -32,7 +32,7 @@ ONE OF:
 ### Step 1: Get Started
 1. Connect your Arduino Nano ESP32 to your computer.
 
-2. Open Mu. If you have any problems detecting your board, return to Lab 1!
+2. Open Mu/VSCode. If you have any problems detecting your board, return to Lab 1!
 
 3. As you probably noticed from the prior lab, I am starting to make my instructions more open-ended. I am trusting you to remember what you did in prior labs and bring that knowledge (and code!) to bear here. 
 
