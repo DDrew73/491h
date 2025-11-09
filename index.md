@@ -34,6 +34,8 @@ Note that this is a **live site**; I will be adding Readings and Labs module blo
 |[17. Encoders](readings/reading17/reading17.md)                                     | 10/29 |
 |[18. Feedback Control Overview](readings/reading18/reading18.md)                    | 11/03 |
 |[19. PID Controllers](readings/reading19/reading19.md)                              | 11/05 |
+|[20. Noise and Filters](readings/reading20/reading20.md)                            | 11/10 |
+|[21. The Fast Fourier Transform](readings/reading21/reading21.md)                   | 11/12 |
 
 ## Labs
 
@@ -50,6 +52,8 @@ Note that this is a **live site**; I will be adding Readings and Labs module blo
 |[9. Exploring Other Actuators: Piezo Piano](labs/lab9/lab9.md)                      | 10/20, 10/22 |
 |[10. DC Motor Driver Circuits: The H Bridge](labs/lab10/lab10.md)                   | 10/27, 10/29 |
 |[11. Feedback Control: DC Motor PID](labs/lab11/lab11.md)                           | 11/03, 11/05 | 
+|[12. Digital Signal Processing: Audio Filtering and FFT](labs/lab12/lab12.md)       | 11/10, 11/12 |
+
 
 <!--
 ## Readings
