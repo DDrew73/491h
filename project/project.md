@@ -53,8 +53,6 @@ Role leadership should describe things like which subsystems (described below), 
 
 ## Subsystem and Component Guide
 
-
-
 ### Chassis
 Your best source of information will be [the product documentation page on Pololu.](https://www.pololu.com/docs/0J68/4)
 <br>
@@ -153,23 +151,6 @@ Your grade follows directly from points on the rubric.
 **15+** = 100%
 **12-14** = 80%
 **< 12** = 60%
-
-
-## Example Schedule and Workplan
-
-| **Date**   | **Day**         | **Activity**                                    |
-|------------|-----------------|------------------------------------------------|
-| **11/18**  | Monday          | Assemble chassis, team planning                |
-|            | Wednesday       | Subsystem testing and development              |
-|            | Out-of-class    | Assembly, soldering, and gluing                |
-| **11/25**  | Monday          | Finish assembly and wiring; integrate subsystem code |
-|            | Wednesday       | Test subsystems on assembled robot             |
-|            | Out-of-class    | Refactor code                                  |
-| **12/2**   | Monday          | Full run tuning                                |
-|            | Wednesday       | Full run tuning, practice scoring points       |
-|            | Out-of-class    | Full run tuning; rubric details                |
-| **12/9**   | Monday          | Competition and scoring day!                   |
-
 
 ### Suggested Work Split Part 1: Subsystem Focus
 

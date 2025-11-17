@@ -54,6 +54,12 @@ Note that this is a **live site**; I will be adding Readings and Labs module blo
 |[11. Feedback Control: DC Motor PID](labs/lab11/lab11.md)                           | 11/03, 11/05 | 
 |[12. Digital Signal Processing: Audio Filtering and FFT](labs/lab12/lab12.md)       | 11/10, 11/12 |
 
+## Project
+
+|              Topic                                                                 | Date |
+| :-------                                                                           |:----:|
+|[Project Documentation](project/project.md)                                        |11/17 - 12/10 |      
+-->
 
 <!--
 ## Readings
