@@ -59,7 +59,8 @@ Note that this is a **live site**; I will be adding Readings and Labs module blo
 |              Topic                                                                 | Date |
 | :-------                                                                           |:----:|
 |[Project Documentation](project/project.md)                                        |11/17 - 12/10 |      
--->
+|||
+
 
 <!--
 ## Readings
