@@ -1,5 +1,10 @@
 <link rel="stylesheet" type="text/css" href="../../assets/css/styles.css">
 
+<!--
+NOTES TO SELF:
+-Include rotaryio information for the encoders!
+-->
+
 # The Line-Following Robot
 
 Building a line-following robot is a standard milestone in every budding young robotocist's career. You have probably seen or heard about doing this, or already built one yourself! I think it is a nice way to tie together a lot of the course concepts from this semester; you will need to interface with a new sensor, design and tune a basic feedback system to stay on the line, work with motors and encoders, and carefully architect a state machine to keep track of where you are in the course. 
