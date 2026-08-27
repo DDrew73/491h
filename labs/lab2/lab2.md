@@ -82,7 +82,7 @@ This lab will be your first chance to really exercise the Circuitpython interfac
         led_green.value = green
         led_blue.value = blue
 
-    if __name__ == '__main__'
+    if __name__ == '__main__':
         main()
     ```
 
