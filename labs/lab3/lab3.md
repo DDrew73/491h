@@ -38,14 +38,14 @@
 
 ### Step 2: Digital Input Basics
 1. Let's use the REPL interface to explore how the button works. This code will set up our button on Pin D2 using the digitalio module:
-    ```python
-    button = digitalio.DigitalInOut(board.D2)
-    button.direction = digitalio.Direction.INPUT
-    ```
+   ```python
+   button = digitalio.DigitalInOut(board.D2)
+   button.direction = digitalio.Direction.INPUT
+   ```
 
-2. To read the digital input (i.e., perform a "digitalRead()" in Arduino parlance), simply call `button.value`. Remember that you can press the up arrow on your keyboard and press enter to re-run the last REPL command. <u>Read the button value 10+ times manually as fast as you can while *not* pushing the button; what do you notice about the return value?</u> Now read the value while pressing the button. 
+2. To read the digital input (i.e., perform a "digitalRead()" in Arduino parlance), simply call `button.value`. Remember that you can press the up arrow on your keyboard and press enter to re-run the last REPL command. <u>Read the button value 10+ times while *not* pushing the button; what do you notice about the return value?</u> With the pin floating, there is no circuit element that guarantees its voltage. Your particular pin may appear to consistently read True, consistently read False, or change between the two. Obviously this kind of non-deterministic behavior is very bad for a button!  
 
-3. Now we are going to modify our circuit. Go ahead and grab a 10k resistor from your kit, then connect it across the D2 pin (or the button leg) to the 3.3V pin of your Nano. Read the button value a few times manually now while *not* pressing the button; what do you notice about the return value? Think about why this behavior has changed. Read the value while pressing the button as a sanity check.
+3. Now we are going to modify our circuit. Go ahead and grab a 10k resistor from your kit, then connect it across the D2 pin (or the button leg) to the 3.3V pin of your Nano. Read the button value a few times manually now while *not* pressing the button; what do you notice about the return value? Read the value while pressing the button as a sanity check.
 
 4. <u>Draw the the circuit schematic for both of these cases.</u>
 
@@ -53,19 +53,19 @@
 
 ### Step 3: Debouncing
 1. There is a significant timing mismatch between our bodies, the physical mechanisms of things like tactile switches, and code execution on an embedded computer. This is a ubiquitous problem in cyberphysical systems which you may have experienced in your normal life; you press a button once and it activates twice, or you try and double-click a button and it only registers one. Let's explore this topic with our hardware. <u>Copy this code into your Mu editor and see what happens when you press the button</u>:
-```python
-    import board
-    import digitalio
-    import time
-
-    button = digitalio.DigitalInOut(board.D2)
-    button.direction = digitalio.Direction.INPUT
-    button.pull = digitalio.Pull.UP
-
-    while True:
-        if button.value == False:
-            print("Pressed")
-```
+   ```python
+   import board
+   import digitalio
+   import time
+   
+   button = digitalio.DigitalInOut(board.D2)
+   button.direction = digitalio.Direction.INPUT
+   button.pull = digitalio.Pull.UP
+   
+   while True:
+       if button.value == False:
+           print("Pressed")
+   ```
 2. There are lots of ways to implement **debouncing**, or the removal of unwanted input noise from physical user inputs. Let's go ahead and implement the most naive method now, using the `time.sleep` function. Where can you put `time.sleep(0.5)` in your code to make it so when you press the button quickly, you only see one "Pressed" output?
 
 3. That's a simple fix, but what happens now when you try to press the button as fast as you can? Empirically tune the value of the sleep duration until it accurately captures your presses - no more and no less. 
@@ -83,14 +83,14 @@
 1. Time for an exercise in integration. Grab all your RGB LED code from Lab 2, and smoosh it into this file. 
 
 2. Change your code so that for 3 seconds, you can toggle the RED LED on and off with a button press. Then, for 3 seconds, the GREEN LED turns on when the button is held, and off when not held. The code should then repeat this cycle indefinitely. Show this to Dr. Drew for your checkoff. Note that there are potentially lots of ways to do this! A skeleton for your `while True:` loop might look like:
-    ```python
-    if elapsedTime < 3.0:
-        #Code for toggling the RED LED
-    elif elapsedTime < 6.0:
-        #Code for turning on and off the GREEN LED
-    else:
-        #Code for making sure the cycle repeats itself
-    ```
+   ```python
+   if elapsedTime < 3.0:
+       #Code for toggling the RED LED
+   elif elapsedTime < 6.0:
+       #Code for turning on and off the GREEN LED
+   else:
+       #Code for making sure the cycle repeats itself
+   ```
 
 3. If we overwrite the `code.py` file later, this code will all disappear. That would be a shame! We might want to build on this foundation later. Go ahead and use your chosen Python IDE to create and save a `lab3.py` file with this completed code into the directory you created back in Lab 1. 
 
