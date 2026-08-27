@@ -16,7 +16,7 @@
 - MM jumper wires
 
 ## Deliverables
-- For 3 seconds, toggle the RED LED on and off with a button press. Then for 3 seconds, the GREEN LED turns on when the button is held, and off when not held. Repeat this cycle indefinitely. 
+- For a three second duration, the program should be in a state where you can toggle the RED LED on and off with a button press. Then, for three seconds, the GREEN LED should turn on when the button is held, and turn off when the button is not held. Repeat this cycle indefinitely. 
 
 ## Extensions
 - Switch modes at any time by "double clicking" the button instead of relying on a timer.
@@ -53,7 +53,7 @@
 
 ### Step 3: Debouncing
 1. There is a significant timing mismatch between our bodies, the physical mechanisms of things like tactile switches, and code execution on an embedded computer. This is a ubiquitous problem in cyberphysical systems which you may have experienced in your normal life; you press a button once and it activates twice, or you try and double-click a button and it only registers one. Let's explore this topic with our hardware. <u>Copy this code into your Mu editor and see what happens when you press the button</u>:
-    ```python
+```python
     import board
     import digitalio
     import time
@@ -65,7 +65,7 @@
     while True:
         if button.value == False:
             print("Pressed")
-    ```
+```
 2. There are lots of ways to implement **debouncing**, or the removal of unwanted input noise from physical user inputs. Let's go ahead and implement the most naive method now, using the `time.sleep` function. Where can you put `time.sleep(0.5)` in your code to make it so when you press the button quickly, you only see one "Pressed" output?
 
 3. That's a simple fix, but what happens now when you try to press the button as fast as you can? Empirically tune the value of the sleep duration until it accurately captures your presses - no more and no less. 
