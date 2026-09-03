@@ -20,7 +20,7 @@
 
 ## Extensions
 - Switch modes at any time by "double clicking" the button instead of relying on a timer.
-- Create a "Simon Says" game where the user has to copy the pattern of a flashing LED with their button presses.
+- Create a ["Simon"](https://www.youtube.com/watch?v=1Yqj76Q4jJ4)-type memory game where the user has to copy the pattern of a flashing LED with their button presses
 
 ## Instructions
 
