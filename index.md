@@ -18,6 +18,7 @@ Note that this is a **live site**; I will be adding Readings and Labs module blo
 |[1. Course Syllabus](readings/reading1/syllabus.md)                                 | 8/24 |
 |[2. Past, Present, and Future of Robotics](readings/reading2/reading2.md)           | 8/26 |
 |[3. Microcontrollers and Digital Logic](readings/reading3/reading3.md)              | 8/31 |
+|[4. Analog-to-Digital Conversion](readings/reading4/reading4.md)                    | 9/07 |
 
 ## Labs
 
@@ -26,6 +27,7 @@ Note that this is a **live site**; I will be adding Readings and Labs module blo
 |[1. Installing Circuitpython](labs/lab1/lab1.md)                                    | 8/24 |
 |[2. RGB LED Intro](labs/lab2/lab2.md)                                               | 8/26 |
 |[3. Digital Inputs and Outputs](labs/lab3/lab3.md)                                  | 8/31 |
+|[4. Analog Inputs and Outputs: LED DJ Board](labs/lab4/lab4.md)                     | 9/09 | 
 
 <!--
 ## Readings
