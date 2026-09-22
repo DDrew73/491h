@@ -21,6 +21,7 @@ Note that this is a **live site**; I will be adding Readings and Labs module blo
 |[4. Analog-to-Digital Conversion](readings/reading4/reading4.md)                    | 9/07 |
 |[5. Pulse Width Modulation](readings/reading5/reading5.md)                          | 9/14 |
 |[6. Transduction Principles](readings/reading6/reading6.md)                         | 9/21 |
+|[7. Sensor Readout Circuits](readings/reading7/reading7.md)                         | 9/23 |   
 
 ## Labs
 
