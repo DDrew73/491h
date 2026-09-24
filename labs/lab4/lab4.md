@@ -38,11 +38,11 @@ I think that this will be a challenging exercise in coding for some of you. Reme
 
 ### Step 2: Taking ADC Measurements
 1. Let's use the REPL interface to first explore how to take analog readings using the built-in ADC. This code will set up your A1 pin as an analog input:
-    ```python
-    import board
-    from analogio import AnalogIn
-    analog_in = AnalogIn(board.A1)
-    ```
+   ```python
+   import board
+   from analogio import AnalogIn
+   analog_in = AnalogIn(board.A1)
+   ```
 
 2. To read the analog input (i.e., perform a "analogRead()" in Arduino parlance), simply call `analog_in.value`. Remember that you can press the up arrow on your keyboard and press enter to re-run the last REPL command. Connect the A1 jumper wire directly to the 3.3V pin and check the `analog_in.value`. <u>Assuming that the max value is the closest power-of-two from this number, how many bits of resolution are being reported by your analog_in.value call?</u> Note that this is not the actual resolution of your ADC; the Circuitpython `analogio` library is upscaling it.
 

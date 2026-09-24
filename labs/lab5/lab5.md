@@ -45,13 +45,13 @@ Many transducers/sensors convert incoming stimulus into a change in their resist
 Given that this is a log-log plot, clearly this isn't a nice linear function. Again, luckily, Circuitpython comes with a lightweight `numpy` implementation onboard, called `ulab`. Go ahead and `import ulab`, then explore what it offers with `dir(ulab)`. For example, to see what standard `numpy` functions come with it, try `dir(ulab.numpy)`. 
 
 5. We're going to try and fit a polynomial to the datasheet curve using `ulab.numpy.polyfit`. Start with this code skeleton, and find the polynomial fit values:
-    ```python
-    from ulab import numpy as np
-
-    x = np.array([load1, load2, load3, load4, load5, load7, load8, load9, load10])
-    y = np.array([res1, res2, res3, res4, res5, res6, res7, res8, res9, res10])
-    coefs = np.polyfit(x,y,5)
-    ```
+   ```python
+   from ulab import numpy as np
+   
+   x = np.array([load1, load2, load3, load4, load5, load6, load7, load8, load9, load10])
+   y = np.array([res1, res2, res3, res4, res5, res6, res7, res8, res9, res10])
+   coefs = np.polyfit(x,y,5)
+   ```
 
 Use these coefficients to calculate estimated resistance for some test points; you can use values which are "easy" to read off the graph, like 20g, 200g, 3000g. <u>How do your estimated resistances look compared to the datasheet values?</u> <br>*Hint:* Try using the `np.polyval()` function. <br>*Hint:* [Here is some documentation of ulab.numpy functions](https://micropython-ulab.readthedocs.io/en/latest/numpy-functions.html#polyfit)
 
