@@ -23,6 +23,7 @@ Note that this is a **live site**; I will be adding Readings and Labs module blo
 |[6. Transduction Principles](readings/reading6/reading6.md)                         | 9/21 |
 |[7. Sensor Readout Circuits](readings/reading7/reading7.md)                         | 9/23 |   
 |[8. MEMS Sensors](readings/reading8/reading8.md)                                    | 9/28 |  
+|[9. Digital Communication Protocols](readings/reading9/reading9.md)                 | 9/30 | 
 
 ## Labs
 
