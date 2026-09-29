@@ -39,12 +39,12 @@ Tilt detection using an IMU (inertial measurement unit) is critical to a huge nu
 
 6. If everything was hooked up correctly and the library was successfully put on your drive, this code snippet should execute in REPL with no problem:
 
-    ```python
-    import board
-    import adafruit_mma8451
-    i2c = board.I2C()
-    sensor = adafruit_mma8451.MMA8451(i2c)
-    ```
+   ```python
+   import board
+   import adafruit_mma8451
+   i2c = board.I2C()
+   sensor = adafruit_mma8451.MMA8451(i2c)
+   ```
 
 ### Step 2: Building Intuition
 1. Check the acceleration measurements on the three axes using `sensor.acceleration`. <u> Based on these measurements, which one corresponds to the z axis?</u> 
@@ -137,5 +137,4 @@ def move_player(roll, pitch):
 
 3. Show off your creation to your friends, professor, family, dog, etc. Nice job, you made an interactive electronic game!
 
-
-
+{% include copy_clipboard.html %}
