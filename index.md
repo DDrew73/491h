@@ -28,6 +28,8 @@ Note that this is a **live site**; I will be adding Readings and Labs module blo
 |[11. Simultaneous Localization and Mapping (SLAM)](readings/reading11/reading11.md) | 10/7 |
 |[12. DC Motors](readings/reading12/reading12.md)                                    | 10/12 |
 |[13. Servo Motors](readings/reading13/reading13.md)                                 | 10/14 |
+|[14. The Piezoelectric Effect](readings/reading14/reading14.md)                     | 10/21 |
+|[15. Other Important Actuators](readings/reading15/reading15.md)                    | 10/26 |
 
 ## Labs
 
@@ -41,6 +43,7 @@ Note that this is a **live site**; I will be adding Readings and Labs module blo
 |[6. Complex Peripherals: Accelerometer Inclination](labs/lab6/lab6.md)              | 9/28 |
 |[7. Sensor Characterization: Ultrasonic Obstacle Detector](labs/lab7/lab7.md)       | 10/5 |
 |[8. Sensor and Actuator Integration: The Powerglove](labs/lab8/lab8.md)             | 10/12 |
+|[9. Exploring Other Actuators: Piezo Piano](labs/lab9/lab9.md)                      | 10/21 |
 
 <!--
 ## Readings
