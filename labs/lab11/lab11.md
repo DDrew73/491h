@@ -1,28 +1,28 @@
 <link rel="stylesheet" type="text/css" href="../../assets/css/styles.css">
 
-# Lab 11: Feedback Control: DC Motor PID
-Feedback control is critical for safe and effective use of (most) cyberphysical systems. In this lab, we will learn the basics of PID controller deployment and tuning using hardware which is, obviously, applicable to robotics. If done correctly, this exact code could form the basis for a very capable wheeled robot! 
+# Lab 12: Digital Signal Processing: Audio Filtering and FFT
+Processing incoming sensory data efficiently is key to successful deployment of cyberphysical systems. Considering the computational load of our on-board analysis (e.g., versus sending it for cloud processing) is important, as is considering blocking code, like how we learned to avoid using `time.sleep()` when possible. Here, we will play with sampling audio signals with a microphone, do some signal processing, and then use our code to do some bio-inspired multi agent synchronization!
 
 ## Objectives
-- Understand how to implement closed loop feedback control of dc motors using an encoder
-- Understand basic tuning principles for PID controllers
-- Learn how to read and extract quantiative information about feedback-controlled processes
+- Learn about microphones and microphone preamplifiers
+- Understand how raw audio samples can be converted to frequency domain information
+- Understand the interplay between sampling rate, fft size, and resolution + computational load
+- Learn about how (some) biological systems synchronize their mating calls with a simple algorithm
 
 ## Materials
 - Arduino Nano ESP32
 - USB cable
 - Breadboard
 - MM jumper wires
-- Slotted encoder disk
-- T-Slot interrupter with cable
-- DC motor
-- Wheel
+- Microphone breakout
+- Piezoelectric buzzer
 
 ## Deliverables
-- A tuned PID controller for wheel RPM which can hit any of the RPM targets I give you during checkout. You should have made an effort to minimize rise time, overshoot, and settling time. 
+- A table of computation times versus fft buffer size
+- Bio-inspired synchronized chorusing which works with at least one neighbor; you should be able to tune your system to a frequency Dr. Drew specifies on the spot!
 
 ## Extensions
-- Write code to *automatically* tune your PID controller based on the measured output. 
+- Make sure your chorusing solution is robust to noise by, with at least one partner, making sure you can synchronize WITHOUT synchronizing to another group who is attempting to. 
 
 ## Instructions
 
@@ -33,105 +33,90 @@ Feedback control is critical for safe and effective use of (most) cyberphysical 
 
 3. As you probably noticed from the prior lab, I am starting to make my instructions more open-ended. I am trusting you to remember what you did in prior labs and bring that knowledge (and code!) to bear here. 
 
+### Step 2: Wiring and Testing the Microphone
+1. Connect the microphone breakout to your Arduino. `GND` to `GND`, `VDD` to `3.3V`, `Gain` also to `3.3V`, and `OUT` to an analog input. You can leave `A/R` open. 
 
-### Step 2: Setting Up the Encoder
-1. We first need to wire up the t-slot interrupter. Connect the brown wire to `VBUS`, the pink wire to `VBUS`, the black wire to a digital input with a pullup enbaled, and the blue wire to `GND`. 
+2. Use your plotter to visualize the analog value as you talk, whistle, whatever. Make sure you see qualitative differences from volume. Note how challenging it is to see frequency information from this raw value!
 
-2. Let's write some quick test code to understand how this element works. In a loop, monitor and print the state of the output wire (black) with a short (10ms) delay. Also, if you look on the side of the interrupter, you should see a red LED. 
+### Step 3: Filling and Visualizing a Sample Buffer
+1. Our goal now is to fill a sample buffer of arbitrary length with samples taken at an arbitrary frequency, *without* using any `time.sleep()`. 
 
-3. Slowly rotate the slotted disc inside the T-slot. When a slot is over the beam, what happens? When the beam is blocked, what happens? 
+2. Define some function `collect_samples(sample_rate, num_samples)` to make this work. Inside the function, fill a buffer `samples = []` with `num_samples` analog values, and use `sample_rate` to define the interval between collecting a new sample. If it helps conceptually, one way to do this correctly is to **not leave the function until the entire sample buffer has been filled.**
 
-4. Connect your disc and wheel to your DC motor by sliding them onto the shaft (each gets its own side). Wire up the H-bridge and motor as in the previous lab, so that you can use your previously developed `setMotor(num,speed)` function. 
+3. Define some function `plot_samples(samples)` which puts the entire sample buffer on the plotter window between collections. Again, verify that this works qualitatively. 
 
-5. Spin the motor at a slow speed with the disc in the slot to verify this works.
+4. Devise a way to only plot the samples every nth iteration through the collection loop. This will help you from flooding your serial output and (potentially) crashing your editor. 
+
+### Step 4: The FFT
+1. Now, we want to compute the FFT using those samples, and plot the magnitude of the results along with their frequency bins. First, check the documentation of the `ulab.numpy.fft` module [here](https://docs.circuitpython.org/en/latest/shared-bindings/ulab/numpy/fft/index.html)
+
+
+2. Define a function `perform_fft(samples)` which returns `fft_result`, which should only be the **real** part of the fft result. 
+
+3. Define a function `calculate_frequencies(sample_rate, num_samples)` which returns `frequencies`, which is an array of the frequencies for each FFT bin. 
+
+4. Define a function `star_plot(fft_result,frequencies,scalar))` which prints the fft magnitude at each bin to your serial monitor in the form of stars, with the magnitudes scaled (divided) by the `scalar` input. So conceptually, if the FFT bin magnitude was 100, and the scalar value is 10, then the line should have ten stars. Here is a quick screenshot I took during development:
+
 
 <br>
-<video src="assets/tslot_video.mp4" width="400" controls >
-</video>
+<img src="assets/fft_starplot.png" alt="fft result star plot" width="800"/>
 
-### Step 3: Converting Pulses to RPM
-1. Change your code so that it keeps track of the number of number of "pulses" measured by the t-slot interrupter (i.e., track high-to-low transitions of the digital input). Note that your processor is much faster than the wheel. If you add a "pulse" *every* time the `encoder.value` is `True`, then you will end up double-counting (actually, probably 1000x) counting every slot. 
+Here is an example of this code, which may or may not work exactly for you depending on how you did the earlier substeps:
+```python
+def star_plot(fft_result, frequencies, scalar):
+    for i in range(1,len(frequencies)):
+        magnitude = max(0, int(fft_result[i] / scalar)) 
+        stars = '*' * magnitude
+        print(f"{i}, {frequencies[i]}: {stars}")
+```
+<br>
+Note that I am ignoring the DC component by skipping the 0th frequency. You should see that the magnitude of it is huge, because the microphone has a dc offset in its output. There are other ways to subtract this out! 
 
-2. Convert this number to pulses-per-second, with a user-specified integration time. For example, you could set up a variable `PULSE_CALC_TIME = 0.1`, then check `time.monotonic()` and compute a new `pps` (pulse-per-second) by dividing `pulses` by `PULSE_CALC_TIME`. Don't forget you will need to reset your pulse count and your timer, so that this is correctly computed every `PULSE_CALC_TIME` period. Hint: if you use a time.sleep when printing or plotting this `pps` value, YOU WILL MISS PULSES. Instead, use *another* task timer based on checking `time.monotonic()`. 
 
-3. Your slotted disc should have 20 slots. Verify that this is true. We need to convert `pps` to `rpm`. This is simple math!
+5. Combine these functions into code which collects samples, then performs the fft, then plots the result every nth iteration of this in a star plot. 
 
-4. Use the Mu [built-in plotter](https://codewith.mu/en/tutorials/1.2/plotter) to visualize your measured `rpm` at different commanded motor speeds (i.e., different 0-100 values). Choose a defined run time (e.g., 3 seconds). Note: you need to send a tuple, so use something like `print((rpm,0))`. Printing just `(rpm)` won't work. 
+6. **Verify that your code works by making sure you can differentiate between a few different notes played on YouTube (or wherever).** The picture above was with a 440Hz wave. Here are some examples:
+<br>
+[440 Hz A](https://www.youtube.com/watch?v=RUMRPiddoYM&ab_channel=MusicinSpace)
+<br>
+[261 Hz C4](https://www.youtube.com/watch?v=FB8a9THigmw&ab_channel=MusicinSpace)
 
-5. This isn't the most friendly way to do post-processing on the collected data, and the necessary pause and time to print could mess up our results a bit. How about instead of printing the values as we go, we **save all of the collected RPMs into an array, including the timestamp they were collected at.** For example, you could make an array `rpms = []`, then use `rpms.append(rpm)` with your earlier code.
+7. **Time how long it takes to compute the FFT using your microcontroller for various sizes (num_samples) of FFT.** There are two pieces of this timing: one, how long it takes to fill the sample buffer (which depends on sample_rate), and two, how long it takes to perform the calculation itself. **Time at least 6 different combinations and write them down; I will ask to see them.**
 
-6. It can still be very helpful to view the plot to get qualitative information. After the defined run time is over, write code which prints all the collected RPM values in the plotter format, so you can still look at them afterwards! 
+### Step 5: Synchronized Chorusing
 
-### Step 4: PID Controller
-1. Remember, the goal of feedback control is to minimize the error between the current process output and the desired setpoint. Our final architecture could take the form (roughly sketched):
+1. Hook up your piezo buzzer as in the Piezo Piano lab. You will want to grab some of that code, too. I suggest "forking" your code for lab12 now into two files: `lab12_plotter.py` and `lab12_chorus.py`, where we will now begin work on the "chorus" side. 
+
+2. We are going to implement a bio-inspired synchronized chorusing algorithm based on modern understanding of how fireflies synchronize their blinking. You can read more about this [here](https://www.quantamagazine.org/how-do-fireflies-flash-in-sync-studies-suggest-a-new-answer-20220920/), but the image below should give you the information you need:
+<br>
+<img src="assets/firefly_synchrony.svg" alt="firefly algorithm" width="800"/>
+
+3. This will require a significant refactoring of your code. You will need (at least) five new variables, `chirp_frequency`, `chirp_duration`, `chirp_threshold`, `refractory_period`, and `listen_period`. Your main loop should look something like this pseudocode:
 
 ```python
-def setMotor(num, speed):
-    # Num is motor 'A' or motor 'B'
-    # Speed is an RPM value
-    if num == 'A':
-        motorA.duty_cycle = pid('A', speed, rpm)
-    ...
 
-def pid(num, setpoint, current):
-    kp = 0
-    kd = 0
-    ki = 0
-    feedforward = 40 #just an example to start
+while True:
+    #Chirp
+    doChirp(chirp_frequency,chirp_duration)
     
-    error = setpoint - current
+    #Refractory
+    waitTime = time.monotonic() + refractory_period
+    while time.monotonic() <= waitTime:
+        pass
 
-    # Calculate the PID update, note that there are other variables you will need to keep track of for this!
-
-    # Proportional: kp * error
-    # Derivative: kd * (error - previous_error) / dt
-    # Integral: ki * integral_error
-
-    # A feedforward term will help us condition the output, which is especially important given our lack of direction measurement.
-    # With just proportional gain, it will look like:
-    update = feedforward + kp * error
-    return update
+    #Listen
+    listenTime = time.monotonic() + listen_period
+    while time.monotonic() <= listenTime:
+        collect_samples(sample_rate,num_samples)
+        perform_fft(samples)
+        calculate_frequencies(sample_rate,num_samples)
+        if fft_result[chirp_bin] >= chirp_threshold
+            break #if you hear a chirp at the correct frequency, break out of the listening loop and immediately chirp! 
 ```
 
-2. Let's first just use the proportional gain term. 
-
-A challenging part of PID tuning is always getting initial guesses for the gains. If you look above, I scaled the update to return in 2**16 precision from a calculation 0-100. Based on your experience in the past lab, let's do some rough guesswork for kp. Assume initially your motor is at rest and you command an RPM of 60. What will the error be? What would a reasonable duty cycle command be, to get the motor spinning? 
-
-3. Visualize the output of your proportional-only controller and do some tuning. **For this Step 4 section, don't worry TOO hard about tuning it perfectly; we will do more next step.** If done correctly, you should be able to get (qualitatively) stable oscillations around the setpoint, likely with significant overshoot. Instead 0 padding the tuple for plotting, use the current setpoint (e.g., `print((rpm,setpoint)))`
-
-4. Add in derivative gain `kd`. Tune the controller a bit and see what happens. If done correctly, you should be able to (qualitatively) significantly reduce the overshoot and "ringing" from your proportional-only results. You may see some steady state error, especially at low commanded RPMs.
-
-5. Add in integral gain `ki`. Tune the controller a bit to qualitatively remove any steady state error with this term. If your run time is appropriately short and your tuning has been okay until now, you shouldn't have to worry too much about windup.
-
-### Step 5: Quantitative Analysis and Tuning
-1. You should have been saving all your RPM values, with timestamps, to an array. I want you to calculate the following terms for each run:
-
-**Rise Time:** Time it takes to go from 10% to 90% of the final value.
-
-**Percent Overshoot:** Amount by which you overshoot the target setpoint. 
-
-**Settling Time:** Time it takes to reach steady state, here defined as oscillations below 10% of the final value. 
-
-**Steady State Error:** Difference between the final value and the target value. 
-
-Graphically:
-
 <br>
-<img src="assets/pid_response_label.png" alt="pid response terms" width="400"/>
+Remember that this is just an idea for an architecture, and it will need some editing to make it work!
 
-2. Now sit and tune your controller to make it as close to ideal as possible, for the widest possible range of commanded RPM values. Good luck! Here are some resources to help:
 
-<br>
-<img src="assets/pid_compensation_animated.gif" alt="pid compensation" width="400">
-</img>
-<br>
-<br>
-<img src="assets/pid_parameter_table.png" alt="pid parameter table" width="400/>
+4. Verify your synchronized chorusing works by getting it to sychronize with at least one neighbor. You will need to adjust a bunch of the variables to get this to work nicely! 
 
-<br>
-<br>
-Here is one of my best results during tuning, which reached a steady state value within 10% (75) of the setpoint of 80...
-<br>
-<img src="assets/dsd_output.png" alt="reasonable finish" width="400"/>
-
-3. You may find yourself thinking what the heck, this works pretty well without ANY feedback control (i.e., just the feedforward term), why am I bothering with this PID controller, which is a huge pain in the butt to tune. That's because you are just doing static testing! What if you changed the motor voltage (e.g., drained your robot's battery)? Added a load (therefore requiring more torque)? Drove up a hill? 

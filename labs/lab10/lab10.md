@@ -1,68 +1,161 @@
-<link rel="stylesheet" type="text/css" href="../../assets/css/styles.css">
+# Lab 10 DC Motor Drivers Encoders and PID Control
 
-# Lab 10: DC Motor Driver Circuits: The H Bridge
+In this lab, you will drive a DC motor with an H-bridge, measure its speed with an encoder, and tune a PID controller to maintain a target RPM under changing load.
 
-Electric motors, at scales ranging from consumer devices to airplanes, are absolutely critical to modern life. Precisely and safely operating these motors requires specialized control circuitry. The most ubiquitous example of a motor driver circuit is the "H-bridge." In this lab, we will learn a bit more about how these circuits work in practice, and use one to turn a motor. 
+![Motor speed control loop](assets/control-loop.svg)
 
 ## Objectives
-- Understand how to translate motor commands to h bridge inputs
-- Learn about the most important motor driver circuit on the planet
-- Understand a fundamental component of mobile robots
+
+- Control motor direction and PWM duty cycle.
+- Convert encoder pulses to RPM.
+- Implement and tune P, PI, and PID control.
+- Measure tracking performance and disturbance recovery.
 
 ## Materials
-- Arduino Nano ESP32
-- USB cable
-- Breadboard
-- Accelerometer breakout
-- MM jumper wires
-- Potentiometer
-- Button
-- DC motor
+
+- Arduino Nano ESP32 running CircuitPython, USB cable, and Mu or VS Code
+- Breadboard, jumper wires, and button
+- TB6612 motor driver
+- DC gearmotor and slotted encoder disc
+- T-slot interrupter with cable and a 10 kΩ pullup resistor
 
 ## Deliverables
-ONE OF:
-- Your accelerometer acts as a tilt controller for moving the motor forward/backward based on pitch of your breadboard. A button acts as an "emergency stop" for the motor whenever it is pressed.
-- Your potentiometer controls the speed from 0-100, forward *and* backward (e.g., -100 to 100), with one full turn. A button acts as an "emergency stop" for the motor whenever it is pressed.
+
+- Forward/reverse drive and a working stop button.
+- Verified encoder counts per revolution and RPM measurement.
+- A tuned controller that reaches three positive RPM targets in your measured operating range. Aim for a final mean RPM within 10% of each target.
 
 ## Extensions
-- Do the *other* optional bit at the end as well.
+- Compare starting duty and RPM at different PWM frequencies.
+- Add a timed, nonblocking startup boost, triggered only when starting from rest (a "kickstart").
+- Use a potentiometer or accelerometer to command RPM within the measured range.
+- Develop an automatic tuning procedure.
 
 ## Instructions
 
-### Step 1: Get Started
-1. Connect your Arduino Nano ESP32 to your computer.
+### Step 1 Wire the H-bridge
 
-2. Open Mu/VSCode. If you have any problems detecting your board, return to Lab 1!
+1. Connect your Nano and open your editor. Reuse your earlier PWM, button, and timer code.
+2. Disconnect power and wire motor channel A using the [driver pinout](https://learn.adafruit.com/adafruit-tb6612-h-bridge-dc-stepper-motor-driver-breakout/pinouts). Connect `VCC` to `3V3`, `VM` to `3V3`, and all grounds together. Choose GPIOs for `AIN1`, `AIN2`, `PWMA`, and `STBY`; reserve `D2` for the encoder and `D7` for the button. Note: normally it would NOT be a good idea to connect the VM to the board's regulated 3.3V pin, but your Arduino Nano ESP32 has a 1A maximum current on it. 
+3. Write `setMotor(motorNum, dutyPercent)`, accepting `"A"` and −100 to +100. Clamp the command, use its sign for direction, and convert its magnitude to PWM units:
 
-3. As you probably noticed from the prior lab, I am starting to make my instructions more open-ended. I am trusting you to remember what you did in prior labs and bring that knowledge (and code!) to bear here. 
+   ```python
+   pwm_value = round(abs(dutyPercent) * 65535 / 100)
+   ```
 
-4. The wiring on this board is more complicated than some others you have used, so pay close attention to the pinout instructions [here](https://learn.adafruit.com/adafruit-tb6612-h-bridge-dc-stepper-motor-driver-breakout/pinouts). Wiring this up correctly to drive a single DC motor is your first task! **Note: My USB port didn't like the current draw from the motor when I connected `VM` to `VBUS`. This lab will work fine if you connect `VM` to `3.3V` instead, but try `VBUS` first, because it will work better! It's bad practice to connect your motor to the `3.3V` output of an Arduino. 
+   Use the [TB6612 truth table](https://cdn-shop.adafruit.com/datasheets/TB6612FNG_datasheet_en_20121101.pdf):
 
+   | Action | `STBY` | `AIN1` | `AIN2` | `PWMA` |
+   | --- | --- | --- | --- | --- |
+   | Forward | High | High | Low | PWM |
+   | Reverse | High | Low | High | PWM |
+   | Coast | Low | Either | Either | Either |
 
-### Step 2: The setMotor function
-1. Write a function `setMotor(motorNum, dutyCycle)` which accepts `A` or `B` for `motorNum` and an integer from -100 to 100 for `dutyCycle`. Use the truth table in the [datasheet](https://cdn-shop.adafruit.com/datasheets/TB6612FNG_datasheet_en_20121101.pdf), reproduced below, to correctly set the inputs to the H-bridge for turning the motor forward and backward.
+   For zero duty, set PWM to zero and `STBY` low. For nonzero duty, set direction and PWM before enabling `STBY`. Note that PWM's off phase brakes the motor when `STBY` remains high; standby lets it coast.
+4. Wire a button from `D7` to ground with an internal pullup. Check it every loop iteration. A press must disable drive and latch the program stopped until an explicit restart. Initialize with drive disabled and disable it on program exit, including exceptions.
+5. Secure the motor, reconnect power, and test positive duty, zero, and negative duty. Let the wheel stop before reversing. Verify the button before continuing.
 
-<br>
-<img src="assets/hbridge_table.png" alt="h bridge truth table" width="400"/>
-<br>
-<img src="assets/hbridge_diagram.png" alt="h bridge operation diagram" width="400"/>
+### Step 2 Characterize the motor
 
+1. Start with PWM near 1 kHz and keep that frequency fixed.
+2. Find the minimum duty that reliably starts the motor from rest.
+3. Start it at a higher duty, then reduce duty. Find the lowest value that sustains rotation. Why are these values different?
+4. (OPTIONAL, BUT ENCOURAGED) Write code that "kickstarts" your motor by momentarily applying a high enough duty cycle to get it started, then lowering down to the setpoint, if the setpoint is below the minimum duty you found in Step 2.2.
 
-### Step 3: Basic Characterization
-1. Find the minimum pwm duty cycle which still turns your motor reliably. 
+### Step 3 Measure RPM
 
-2. Explore how altering the pwm frequency changes this minimum pwm duty cycle. Record some values, and any other observations about what changes at different pwm frequencies.
+1. Disconnect power. Mount the disc and wheel, and align the interrupter without rubbing.
+2. Wire the [supplied T-slot sensor](https://www.adafruit.com/product/3985) as follows; check the pinout if your model differs:
 
-3. Do some external research to supplement your investigation of pwm frequency for h bridges, so that you are able to respond to questions Dr. Drew asks you when he checks off your lab. 
+   | Wire | Connection |
+   | --- | --- |
+   | Brown | `VBUS`, 5 V with USB connected |
+   | Pink | Same supply as brown |
+   | Blue | Common ground |
+   | Black | `D2`, with 10 kΩ pullup to **3.3 V** |
 
-4. Here's a trick to work around this limitation. First, see what happens when you set a high duty cycle, THEN drop to this low level where it doesn't moving. Note: you still almost certainly won't be able to reach duty cycles below 10%.
+3. With motor power off, read the input while turning the disc by hand. What happens over a slot? Over a blocked section?
+4. Count falling edges using [`countio.Counter`](https://docs.circuitpython.org/en/9.2.x/shared-bindings/countio/). Release any previous input object on that pin first.
 
-5. Add code into your setMotor function that "kickstarts" the motor by sending a higher duty cycle command *very* briefly, before sending the desired low duty cycle. Tune this to simultaneously minimize the kickstart duration and maximize the usable duty cycle range.
+   ```python
+   import board
+   import countio
+   encoder = countio.Counter(board.D2, edge=countio.Edge.FALL)
+   ```
 
-### Step 4: Sensorimotor Loops: choose ONE of these:
-- Connect your Accelerometer breakout board. Write a program that turns the pitch of your breadboard into forward/backward motor motion. Add a button that can serve as an "emergency stop" for the motor. 
+5. Count the slots; expect 20. Rotate the wheel exactly once and verify the count difference. Define `COUNTS_PER_REV` as counts per **wheel** revolution, including any gearing. Counting both edges would double this number.
+6. Reconnect power. Initialize a count/time snapshot before the first measurement interval. At each update, calculate:
 
-- Connect your potentiometer. Set it up so that a single full turn of your potentiometer corresponds to a full -100 to 100 speed setting (i.e, full ccw and cw range) for your motor. Add a button that can serve as an "emergency stop" for the motor. 
+   ```text
+   dt = time_now - time_previous
+   delta_count = count_now - count_previous
+   rpm = 60 * delta_count / (COUNTS_PER_REV * dt)
+   ```
 
-- **Hint for both:** When you are continuously checking an input to change the motor duty cycle, the "kickstart" code you wrote above will cause undesirable behavior. You need to add more logic to check whether you actually need the kickstart. I will be checking your lab for smooth operation at low duty cycles. 
+   Use actual elapsed seconds, require `dt > 0`, and save the current count/time for the next update. Do not reset the counter between samples.
+7. Choose a measurement interval. With 20 counts/revolution, one count represents 30 RPM over 0.1 s, or 6 RPM over 0.5 s. Short windows give coarse measurements; long windows delay feedback. Resolve your target speeds while retaining enough samples to see the motor's acceleration.
+
+**This single encoder channel cannot detect direction. Use forward rotation and nonnegative RPM targets for the feedback experiments.**
+
+### Step 4 Record an open-loop baseline
+
+1. Measure steady RPM at three to five forward duty settings, from reliable starting duty to about 80%. Record supply voltage and PWM frequency.
+2. Choose low, medium, and high RPM targets within this range. Leave some duty available for correcting load changes.
+3. At the medium target, choose a fixed duty that approximately produces the desired RPM. Include an initial sample at rest and mark the command step. Record for 8–10 seconds; extend the run if needed.
+4. Schedule measurements with `time.monotonic()`. Keep checking the stop button between updates; do not wait with `sleep()`. Save `(time, target_rpm, measured_rpm, applied_duty)` at each update. Disable drive before printing the data.
+5. Plot RPM and target against recorded time. For a quick Mu plot, replay `print((rpm, target))` after the run. Use timestamps for quantitative measurements.
+
+### Step 5 Implement PID
+
+Keep the interfaces separate:
+
+```text
+pid_update(target_rpm, rpm, dt) -> duty_percent
+setMotor("A", duty_percent)    -> driver outputs
+```
+
+1. Update PID once per **new RPM measurement**, using the elapsed seconds between updates. Keep this interval reasonably consistent. Store controller state between calls; reset it before each trial.
+2. Use the following discrete update, with nonnegative gains. `I` is the integral contribution in duty percentage, initially zero; initialize `rpm_previous` to the initial measured RPM.
+
+   ```python
+   error = target_rpm - rpm
+   P = Kp * error
+   I_trial = I + Ki * error * dt
+   D = -Kd * (rpm - rpm_previous) / dt
+   u_trial = u_ff + P + I_trial + D
+   ```
+
+   Choose `u_ff` from your open-loop measurements. Keep it fixed for a given target throughout the P/PI/PID comparison. It estimates the required duty; feedback corrects the error.
+3. Prevent windup: accept `I_trial` only if `0 <= u_trial <= 100`, or if `u_trial > 100` and `error < 0`, or if `u_trial < 0` and `error > 0`. Otherwise retain `I`. Then recompute and limit the **total** command:
+
+   ```python
+   u = min(100, max(0, u_ff + P + I + D))
+   rpm_previous = rpm
+   ```
+
+   Clipping duty alone does not prevent windup. Apply this rule as soon as you enable integral control.
+4. **P:** Set `Ki = Kd = 0`. Increase `Kp` gradually. Estimate an initial gain from `additional_duty / initial_error`. Look for faster response without sustained oscillation; record steady error and overshoot.
+5. **PI:** Add a small positive `Ki`. Does it remove persistent error? Reduce it if recovery becomes slow or oscillatory.
+6. **PID:** Add a small positive `Kd`. The minus sign makes D oppose changes in measured speed. Using measurement rather than error avoids derivative kick when the target changes. D may reduce overshoot, but can amplify encoder noise. If commands become jerky, reduce D or low-pass filter its estimate and record the filter setting.
+7. Compare all three at the same target. Implement and test D, but retain `Kd = 0` if your results favor PI. Use one final set of gains at all three targets; keep timing and filtering fixed.
+8. For a zero target or button press, bypass PID, disable drive, and reset controller state. Preserve the button's stop latch. In forward control, a negative **total command** is clipped to zero; a negative feedback correction may simply reduce the feedforward duty.
+
+If duty stays at 100%, check that the target is achievable. If RPM changes in large steps, improve the speed estimate before increasing gains.
+
+### Step 6 Evaluate performance
+
+1. For each final target, record a step from rest to positive RPM `r`. Measure times from the target step. Use these target-based definitions throughout:
+
+   | Measurement | Definition |
+   | --- | --- |
+   | Rise time | Time from first crossing of `0.1*r` to first crossing of `0.9*r` |
+   | Target overshoot | `100 * max(0, peak_rpm - r) / r` |
+   | Settling time | First time after which all remaining samples stay within `[0.9*r, 1.1*r]`, with at least two seconds remaining |
+   | Steady state error | `r - mean_rpm` over the final two seconds, provided speed is stable |
+
+   Report missing crossings or settling as “not reached during run.” If still changing, label the final mean error as a final-window measurement. Do not claim precision finer than your sampling interval or encoder resolution.
+2. Plot the representative P, PI, and PID trials and tabulate their measurements. Report the same measurements for your final controller at all three targets. Explain one tuning decision.
+3. At the medium target, compare fixed duty with feedback under the **same light load**. Allow speed to settle, apply the instructor's load for a few seconds, then remove it. Record load timing, RPM, and duty. Keep the wheel turning and hands clear.
+4. Compare speed drop, error under load, and recovery. Did feedback increase duty? Did saturation limit recovery? Explain why fixed duty can work well unloaded but fail when torque demand changes.
+
 

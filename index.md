@@ -30,6 +30,10 @@ Note that this is a **live site**; I will be adding Readings and Labs module blo
 |[13. Servo Motors](readings/reading13/reading13.md)                                 | 10/14 |
 |[14. The Piezoelectric Effect](readings/reading14/reading14.md)                     | 10/21 |
 |[15. Other Important Actuators](readings/reading15/reading15.md)                    | 10/26 |
+|[16. Motor Driver Circuits](readings/reading16/reading16.md)                        | 10/28 |
+|[17. Encoders](readings/reading17/reading17.md)                                     | 11/2 |
+|[18. Feedback Control Overview](readings/reading18/reading18.md)                    | 11/4 |
+|[19. PID Controllers](readings/reading19/reading19.md)                              | 11/4 |
 
 ## Labs
 
@@ -44,6 +48,7 @@ Note that this is a **live site**; I will be adding Readings and Labs module blo
 |[7. Sensor Characterization: Ultrasonic Obstacle Detector](labs/lab7/lab7.md)       | 10/5 |
 |[8. Sensor and Actuator Integration: The Powerglove](labs/lab8/lab8.md)             | 10/12 |
 |[9. Exploring Other Actuators: Piezo Piano](labs/lab9/lab9.md)                      | 10/21 |
+|[10. Turning Wheels: Motor Drivers, Encoders, and PID Control](labs/lab10/lab10.md) | 10/28 |
 
 <!--
 ## Readings

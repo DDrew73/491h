@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="260" viewBox="0 0 1000 260" role="img" aria-labelledby="title desc">
+  <title id="title">DC motor speed control loop</title>
+  <desc id="desc">The desired RPM enters a PID controller. A duty percentage command goes to the H-bridge and motor. An encoder measures the rotation and returns measured RPM to the controller.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#334155"/>
+    </marker>
+  </defs>
+  <rect width="1000" height="260" rx="12" fill="#ffffff"/>
+  <g stroke="#94a3b8" stroke-width="1.5">
+    <rect x="25" y="65" width="140" height="80" rx="10" fill="#f1f5f9"/>
+    <rect x="250" y="65" width="180" height="80" rx="10" fill="#e0f2fe"/>
+    <rect x="530" y="65" width="200" height="80" rx="10" fill="#e0f2fe"/>
+    <rect x="825" y="65" width="150" height="80" rx="10" fill="#f1f5f9"/>
+  </g>
+  <g fill="#0f172a" font-family="Arial, Helvetica, sans-serif" font-size="20" text-anchor="middle">
+    <text x="95" y="100">Desired</text><text x="95" y="127">RPM</text>
+    <text x="340" y="100">PID controller</text>
+    <text x="340" y="125" font-size="14">error = target − RPM</text>
+    <text x="630" y="100">H-bridge</text><text x="630" y="127">and DC motor</text>
+    <text x="900" y="113">Encoder</text>
+  </g>
+  <g fill="none" stroke="#334155" stroke-width="2" marker-end="url(#arrow)">
+    <path d="M 165 105 H 247"/>
+    <path d="M 430 105 H 527"/>
+    <path d="M 730 105 H 822"/>
+    <path d="M 900 145 V 220 H 340 V 148"/>
+  </g>
+  <g fill="#475569" font-family="Arial, Helvetica, sans-serif" font-size="15" text-anchor="middle">
+    <text x="207" y="91">target</text>
+    <text x="480" y="91">duty %</text>
+    <text x="778" y="91">rotation</text>
+    <text x="620" y="207">measured RPM</text>
+  </g>
+</svg>
