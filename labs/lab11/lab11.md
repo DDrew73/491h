@@ -1,6 +1,6 @@
 <link rel="stylesheet" type="text/css" href="../../assets/css/styles.css">
 
-# Lab 12: Digital Signal Processing: Audio Filtering and FFT
+# Lab 11: Digital Signal Processing: Audio Filtering and FFT
 Processing incoming sensory data efficiently is key to successful deployment of cyberphysical systems. Considering the computational load of our on-board analysis (e.g., versus sending it for cloud processing) is important, as is considering blocking code, like how we learned to avoid using `time.sleep()` when possible. Here, we will play with sampling audio signals with a microphone, do some signal processing, and then use our code to do some bio-inspired multi agent synchronization!
 
 ## Objectives
@@ -51,12 +51,11 @@ Processing incoming sensory data efficiently is key to successful deployment of 
 1. Now, we want to compute the FFT using those samples, and plot the magnitude of the results along with their frequency bins. First, check the documentation of the `ulab.numpy.fft` module [here](https://docs.circuitpython.org/en/latest/shared-bindings/ulab/numpy/fft/index.html)
 
 
-2. Define a function `perform_fft(samples)` which returns `fft_result`, which should only be the **real** part of the fft result. 
+2. Define a function `perform_fft(samples)` that computes the FFT and returns an array `fft_magnitudes`. Use both the real and imaginary parts of each FFT coefficient to calculate its magnitude: `sqrt(real[k]**2 + imag[k]**2)`. These magnitudes describe the strength of the frequency components in the sampled signal.
 
 3. Define a function `calculate_frequencies(sample_rate, num_samples)` which returns `frequencies`, which is an array of the frequencies for each FFT bin. 
 
-4. Define a function `star_plot(fft_result,frequencies,scalar))` which prints the fft magnitude at each bin to your serial monitor in the form of stars, with the magnitudes scaled (divided) by the `scalar` input. So conceptually, if the FFT bin magnitude was 100, and the scalar value is 10, then the line should have ten stars. Here is a quick screenshot I took during development:
-
+4. Define a function `star_plot(fft_magnitudes,frequencies,scalar))` which prints the fft magnitude at each bin to your serial monitor in the form of stars, with the magnitudes scaled (divided) by the `scalar` input. So conceptually, if the FFT bin magnitude was 100, and the scalar value is 10, then the line should have ten stars. Here is a quick screenshot I took during development:
 
 <br>
 <img src="assets/fft_starplot.png" alt="fft result star plot" width="800"/>

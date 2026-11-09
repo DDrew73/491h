@@ -34,6 +34,8 @@ Note that this is a **live site**; I will be adding Readings and Labs module blo
 |[17. Encoders](readings/reading17/reading17.md)                                     | 11/2 |
 |[18. Feedback Control Overview](readings/reading18/reading18.md)                    | 11/4 |
 |[19. PID Controllers](readings/reading19/reading19.md)                              | 11/4 |
+|[20. Noise and Filters](readings/reading20/reading20.md)                            | 11/09 |
+|[21. The Fast Fourier Transform](readings/reading21/reading21.md)                   | 11/16 |
 
 ## Labs
 
@@ -49,6 +51,7 @@ Note that this is a **live site**; I will be adding Readings and Labs module blo
 |[8. Sensor and Actuator Integration: The Powerglove](labs/lab8/lab8.md)             | 10/12 |
 |[9. Exploring Other Actuators: Piezo Piano](labs/lab9/lab9.md)                      | 10/21 |
 |[10. Turning Wheels: Motor Drivers, Encoders, and PID Control](labs/lab10/lab10.md) | 10/28 |
+|[11. Digital Signal Processing: Audio Filtering and FFT](labs/lab11/lab11.md)       | 11/09 |
 
 <!--
 ## Readings
