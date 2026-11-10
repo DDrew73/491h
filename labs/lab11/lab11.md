@@ -84,7 +84,7 @@ Note that I am ignoring the DC component by skipping the 0th frequency. You shou
 
 ### Step 5: Synchronized Chorusing
 
-1. Hook up your piezo buzzer as in the Piezo Piano lab. You will want to grab some of that code, too. I suggest "forking" your code for lab12 now into two files: `lab12_plotter.py` and `lab12_chorus.py`, where we will now begin work on the "chorus" side. 
+1. Hook up your piezo buzzer as in the Piezo Piano lab. You will want to grab some of that code, too. I suggest "forking" your code for lab11 now into two files: `lab11_plotter.py` and `lab11_chorus.py`, where we will now begin work on the "chorus" side. 
 
 2. We are going to implement a bio-inspired synchronized chorusing algorithm based on modern understanding of how fireflies synchronize their blinking. You can read more about this [here](https://www.quantamagazine.org/how-do-fireflies-flash-in-sync-studies-suggest-a-new-answer-20220920/), but the image below should give you the information you need:
 <br>
