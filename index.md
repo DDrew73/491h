@@ -53,6 +53,12 @@ Note that this is a **live site**; I will be adding Readings and Labs module blo
 |[10. Turning Wheels: Motor Drivers, Encoders, and PID Control](labs/lab10/lab10.md) | 10/28 |
 |[11. Digital Signal Processing: Audio Filtering and FFT](labs/lab11/lab11.md)       | 11/09 |
 
+## Project
+
+|              Topic                                                                 | Date |
+| :-------                                                                           |:----:|
+|[Project Documentation](project/project.md)                                        |11/18 - 12/09 |      
+|||
 <!--
 ## Readings
 
